@@ -3,194 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏔️ Anleitung Hütte Lienz - Zettersfeld</title>
+    <title>🏔️ Hütte Lienz - Schritt-für-Schritt Anleitung</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
             max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.7; 
             color: #2d3748; background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); 
         }
-        header { text-align: center; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; }
-        h1 { color: #2d3748; font-size: 2.2em; margin: 0; }
-        h2 { color: #2b6cb0; border-bottom: 3px solid #bee3f8; padding-bottom: 10px; }
-        h3 { color: #2c5282; margin-top: 30px; }
+        .progress-container { 
+            position: sticky; top: 0; background: white; padding: 15px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; margin-bottom: 20px;
+        }
+        .progress-bar { 
+            height: 8px; background: #e2e8f0; border-radius: 4px; 
+            overflow: hidden; margin-bottom: 10px;
+        }
+        .progress-fill { 
+            height: 100%; background: linear-gradient(90deg, #48bb78, #38a169); 
+            width: 0%; transition: width 0.3s ease; border-radius: 4px;
+        }
+        .steps { display: flex; justify-content: space-between; list-style: none; }
+        .step { 
+            text-align: center; font-size: 12px; font-weight: 500; color: #a0aec0; 
+            position: relative; flex: 1;
+        }
+        .step.active { color: #38a169; }
+        .step.done::before { 
+            content: '✅'; font-size: 18px; position: absolute; top: -25px; left: 50%; 
+            transform: translateX(-50%);
+        }
+        .step-container { display: none; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .step-container.active { display: block; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .nav-buttons { display: flex; gap: 15px; justify-content: space-between; margin-top: 30px; }
+        .btn { 
+            padding: 12px 24px; border: none; border-radius: 25px; font-weight: 600; 
+            cursor: pointer; transition: all 0.2s; font-size: 16px;
+        }
+        .btn-primary { background: #4299e1; color: white; }
+        .btn-primary:hover:not(:disabled) { background: #3182ce; transform: translateY(-1px); }
+        .btn-secondary { background: #e2e8f0; color: #4a5568; }
+        .btn-secondary:hover:not(:disabled) { background: #cbd5e0; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        h1 { color: #2d3748; font-size: 2.2em; text-align: center; margin-bottom: 20px; }
+        h2 { color: #2b6cb0; border-bottom: 3px solid #bee3f8; padding-bottom: 10px; margin-bottom: 20px; }
+        h3 { color: #2c5282; margin: 25px 0 15px 0; }
         .gps { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
             color: white; padding: 20px; border-radius: 12px; text-align: center; 
-            font-weight: 600; font-size: 1.1em; margin: 20px 0;
+            font-weight: 600; margin: 20px 0;
         }
         .map-link { 
             display: inline-block; background: #48bb78; color: white; 
-            padding: 12px 24px; border-radius: 25px; text-decoration: none; 
-            font-weight: 600; margin: 10px; box-shadow: 0 4px 12px rgba(72,187,120,0.3);
+            padding: 10px 20px; border-radius: 20px; text-decoration: none; 
+            font-weight: 600; margin: 5px;
         }
-        .map-link:hover { background: #38a169; transform: translateY(-2px); }
         img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 15px 0; }
         .warn { background: #fed7d7; border-left: 5px solid #e53e3e; padding: 15px; margin: 15px 0; border-radius: 8px; }
-        ul { list-style: none; padding: 0; }
-        li { 
-            background: white; margin: 12px 0; padding: 18px; border-radius: 12px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: relative; 
-        }
-        input[type="checkbox"] { 
-            transform: scale(1.4); margin-right: 12px; accent-color: #48bb78; 
-        }
-        .checklist li { border-left: 4px solid #48bb78; }
-        .section { background: white; padding: 25px; border-radius: 16px; margin: 25px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .tip { background: #e6fffa; border-left: 4px solid #00b5ad; padding: 15px; margin: 15px 0; border-radius: 8px; }
+        ul { list-style: none; padding: 0; }
+        li { background: #f7fafc; margin: 12px 0; padding: 18px; border-radius: 12px; border-left: 4px solid #e2e8f0; }
+        input[type="checkbox"] { transform: scale(1.4); margin-right: 12px; accent-color: #48bb78; }
+        .checklist li { border-left-color: #48bb78; }
         footer { text-align: center; padding: 30px; color: #718096; border-top: 1px solid #e2e8f0; margin-top: 40px; }
         @media (max-width: 768px) { 
             body { padding: 15px; } 
             h1 { font-size: 1.8em; }
-            img { border-radius: 8px; }
+            .steps { font-size: 10px; }
+            .nav-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+    <h1>🏔️ Hütte Lienz - Schritt-für-Schritt</h1>
 
-    <!-- ANREISE -->
-    <div class="section">
+    <!-- PROGRESS BAR -->
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <ul class="steps" id="steps">
+            <li class="step active" data-step="0">Anreise</li>
+            <li class="step" data-step="1">Ankunft</li>
+            <li class="step" data-step="2">Abreise</li>
+        </ul>
+    </div>
+
+    <!-- STEP 0: ANREISE -->
+    <div class="step-container active" data-step="0">
         <h2>🚗 0. Anreise</h2>
-        
-        <h3>📍 Zieladresse</h3>
         <div style="background: #e6fffa; padding: 25px; border-radius: 12px; text-align: center; font-size: 1.4em; font-weight: bold;">
             🏔️ Hütte Lienz<br>
             <span style="font-size: 1.3em;">Zettersfeld 14</span><br>
             9904 Thurn, Österreich
         </div>
         <p style="text-align: center;">
-            <a href="https://maps.google.com/?q=Zettersfeld+14,9904+Thurn" class="map-link" target="_blank">🗺️ Google Maps Anreise</a>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=Zettersfeld+14,9904+Thurn" class="map-link" target="_blank">📱 Navigation starten</a>
+            <a href="https://maps.google.com/?q=Zettersfeld+14,9904+Thurn" class="map-link" target="_blank">🗺️ Google Maps</a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Zettersfeld+14,9904+Thurn" class="map-link" target="_blank">📱 Navigation</a>
         </p>
-
-        <h3>🪨 Fußweg vom Sporthotel (5-7 Min.)</h3>
-        <img src="bilder/Luftaufnahme_Weg.png" alt="Fußweg Sporthotel zur Hütte" style="max-width: 100%;">
+        <h3>🪨 Fußweg vom Sporthotel</h3>
+        <img src="bilder/Luftaufnahme_Weg.png" alt="Fußweg">
         <div class="tip">
-            <strong>💡 WICHTIG:</strong> Fußweg zur Hütte sind etwa <strong>400m mit 40m Höhenunterschied</strong>.<br>
-            Deswegen empfiehlt es sich, sein Gepäck in Rücksäcken verstaut zu haben.<br>
-            <strong>Je nach Schneehöhe dauert der Weg 5-7 Minuten. Nachts sind Stirnlampen hilfreich.</strong>
+            💡 <strong>400m mit 40m Höhenunterschied (Aufstieg)</strong><br>
+            Gepäck in Rücksäcken verstauen! Je nach Schnee 5-7 Min.<br>
+            <strong>Nachts Stirnlampen mitnehmen!</strong>
         </div>
-        <ul>
-            <li><strong>Start:</strong> Sporthotel Hochlienz Zettersfeld 1</li>
-            <li><strong>Ziel:</strong> Hütte Zettersfeld 14 (GPS: 46.865788° N, 12.788949° E)</li>
-            <li><strong>Strecke:</strong> 400m Fußweg, 40m Höhenunterschied (Aufstieg)</li>
-            <li><strong>Parken:</strong> Sporthotel oder Parkplätze Thurn (Winterreifen/Panzerketten!)</li>
-        </ul>
-        <img src="bilder/Alm - Foto Winter.jpg" alt="Alm Winter" style="max-width: 100%;">
     </div>
 
-    <!-- HEADER -->
-    <header>
-        <h1>🏔️ Anleitung Hütte Lienz</h1>
-        <div class="gps">
-            <img src="bilder/GPS-Koordinaten.PNG" alt="GPS-Koordinaten" style="max-width: 280px;">
-            46.865788° N, 12.788949° E<br>
-            <small>Zettersfeld 14, 9904 Thurn</small>
-        </div>
-    </header>
-
-    <!-- ANKUNFT -->
-    <div class="section">
+    <!-- STEP 1: ANKUNFT -->
+    <div class="step-container" data-step="1">
         <h2>1. Ankunft</h2>
-
         <h3>1.1 Strom einschalten</h3>
         <img src="bilder/Sicherungskasten 2012_2.jpg" alt="Sicherungskasten">
         <ul>
-            <li>Sicherungskasten außen an der Vorderseite. Schlüssel am Esstisch.</li>
-            <li class="warn">🔴 <strong>Boiler-Sicherungen ZUNÄCHST AUS</strong> lassen! Erst nach Wasserfüllen einschalten.</li>
-            <li>Alle anderen Sicherungen wie abgebildet.</li>
-        </ul>
-
-        <h3>1.2 Fenster öffnen</h3>
-        <img src="bilder/Luftaufnahme_2.PNG" alt="Hütte Luftaufnahme">
-        <ul>
-            <li>Fensterläden öffnen und außen verriegeln.</li>
-            <li>Holztafeln aus den Fensterkästen als Einbruchschutz.</li>
-        </ul>
-
-        <h3>1.3 E-Heizung abbauen</h3>
-        <img src="bilder/E-Heizkörper Einstellung.jpg" alt="E-Heizkörper">
-        <img src="bilder/Heizung_Bad.JPG" alt="Heizung Bad">
-        <ul>
-            <li>E-Heizung unter dem Waschbecken verstauen.</li>
-        </ul>
-
-        <h3>1.4 Ofen in Betrieb nehmen</h3>
-        <img src="bilder/Heizung_Stube.JPG" alt="Ofen Stube">
-        <ul>
-            <li>Ofen bereit zum Anzünden (Streichhölzer/Feuerzeug dabei).</li>
-            <li>Bei <0°C: Dauerheizen mit Koks aus Schuppen hinter Hütte.</li>
-            <li>Anzünden mit Tannenzapfen (vor Hütte) + Zeitung (WC).</li>
+            <li>Sicherungskasten außen. Schlüssel am Esstisch.</li>
+            <li class="warn">🔴 <strong>Boiler-Sicherungen AUS</strong> lassen bis Wasser gefüllt!</li>
         </ul>
 
         <h3>1.5 Wasser aufdrehen</h3>
-        <img src="bilder/Boiler Wasserhahn 2.jpg" alt="Boiler Wasserhahn">
-        <img src="bilder/Wasserhahn in der Dusche.jpg" alt="Dusche Wasserhahn">
+        <img src="bilder/Boiler Wasserhahn 2.jpg" alt="Boiler">
         <ul>
-            <li class="warn">Alle Auslassstellen schließen! Kugelventil Boiler geschlossen, Messing-Abdeckkappe ab.</li>
-            <li>Keller: Wasserschacht öffnen → Zulaufhahn drehen → Hauptventil ggf. öffnen.</li>
-            <li>Leitungen entlüften: Warmwasser laufen lassen bis Luft weg ist.</li>
+            <li class="warn">Alle Auslassstellen schließen! Kugelventil Boiler geschlossen.</li>
+            <li>Keller: Wasserschacht → Zulaufhahn öffnen.</li>
         </ul>
 
-        <h3>1.6 Boiler in Betrieb nehmen</h3>
+        <h3>1.6 Boiler starten</h3>
         <img src="bilder/Boiler Kugelhahn.tif" alt="Boiler Kugelhahn">
         <ul>
-            <li>Boiler-Sicherungen einschalten (draußen am Sicherungskasten).</li>
-            <li>Drehschalter auf <strong>ECO</strong> → Rechteckiger Startknopf drücken.</li>
-            <li>Warmwasservorrat an Balkenanzeige ablesen.</li>
+            <li>Boiler-Sicherungen einschalten → ECO → Startknopf.</li>
         </ul>
     </div>
 
-    <!-- ABREISE -->
-    <div class="section">
+    <!-- STEP 2: ABREISE -->
+    <div class="step-container" data-step="2">
         <h2>2. Abreise</h2>
-        
-        <h3>📋 Checkliste abhaken (Zählerstände notieren)</h3>
+        <h3>📋 Checkliste abhaken</h3>
         <form>
             <ul class="checklist">
-                <li><input type="checkbox"> Strom Boiler ausschalten (3 Sicherungen)</li>
-                <li><input type="checkbox"> Wasser abdrehen → Boiler/Splkasten entleeren</li>
-                <li><input type="checkbox"> Wasserzuleitung absperren + Leitung entleeren</li>
-                <li><input type="checkbox"> Ofen saubermachen + neu befüllen</li>
-                <li><input type="checkbox"> Endreinigung (Dusche/WC saugen/Kühlschrank leer)</li>
-                <li><input type="checkbox"> Fenster schließen + Holztafeln einstellen</li>
-                <li><input type="checkbox"> E-Heizung aufstellen (Mitte Stube)</li>
-                <li><input type="checkbox"> Kaffeemaschine frostfrei (Dampftaste → Tank entleeren)</li>
-                <li><input type="checkbox"> Frostschutz einfüllen (0,15l Waschbecken/0,25l WC)</li>
-                <li><input type="checkbox"> Strom aus (außer GSM + Hauptsicherungen)</li>
-                <li><input type="checkbox"> Abschließen (Stube/Schuppen/Hütte)</li>
+                <li><input type="checkbox"> Strom Boiler ausschalten</li>
+                <li><input type="checkbox"> Wasser abdrehen + entleeren</li>
+                <li><input type="checkbox"> Frostschutz einfüllen</li>
+                <li><input type="checkbox"> E-Heizung aufstellen</li>
+                <li><input type="checkbox"> Abschließen</li>
             </ul>
         </form>
-
-        <h3>2.2 Wasser abdrehen & Boiler entleeren</h3>
-        <ul>
-            <li>Alle Wasserhähne öffnen → 10 Min warten bis komplett abgelaufen</li>
-            <li>Kugelventil Boiler öffnen → Restwasser in Topf abfangen</li>
-            <li>Keller: Zulauf abdrehen → Hauptventil schließen → Kugelhahn öffnen</li>
-        </ul>
     </div>
 
-    <!-- GALERIE -->
-    <div class="section">
-        <h2>🌄 Aussicht & Details</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <img src="bilder/WildView1.JPG" alt="Aussicht 1">
-            <img src="bilder/WildView2.JPG" alt="Aussicht 2">
-            <img src="bilder/WildView3.JPG" alt="Aussicht 3">
-            <img src="bilder/BILD0728.JPG" alt="Hütten-Detail 1">
-            <img src="bilder/BILD0730.JPG" alt="Hütten-Detail 2">
-            <img src="bilder/BILD0731.JPG" alt="Hütten-Detail 3">
-            <img src="bilder/BILD0794.JPG" alt="Hütten-Detail 4">
-        </div>
-        <img src="bilder/Luftaufnahme.PNG" alt="Luftaufnahme Hütte" style="max-width: 100%; margin-top: 20px;">
+    <!-- NAVIGATION -->
+    <div class="nav-buttons">
+        <button class="btn btn-secondary" id="prevBtn" disabled>← Zurück</button>
+        <button class="btn btn-primary" id="nextBtn">Weiter →</button>
     </div>
 
-    <footer>
+    <footer style="margin-top: 50px;">
         <p><strong>Version Feb 2026</strong> | 
-        <a href="https://github.com/meschnigm/Zettersfeld/edit/main/index.html" style="color: #4299e1;">📝 Editieren</a> | 
-        <a href="https://github.com/meschnigm/Zettersfeld" style="color: #4299e1;">🐙 GitHub</a></p>
-        <p><strong>Schlüssel & Taschenlampe auf den Esstisch legen!</strong><br>
-        🎿 Guten Aufenthalt in der Hütte Lienz, Zettersfeld 14!</p>
+        <a href="https://github.com/meschnigm/Zettersfeld/edit/main/index.html">📝 Editieren</a></p>
     </footer>
+
+    <script>
+        class HuttenAnleitung {
+            constructor() {
+                this.currentStep = 0;
+                this.totalSteps = 3;
+                this.init();
+            }
+
+            init() {
+                this.steps = document.querySelectorAll('.step-container');
+                this.stepIndicators = document.querySelectorAll('.step');
+                this.progressFill = document.getElementById('progressFill');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+
+                // Event Listeners
+                this.nextBtn.addEventListener('click', () => this.nextStep());
+                this.prevBtn.addEventListener('click', () => this.prevStep());
+
+                // Load saved progress
+                this.loadProgress();
+                this.updateView();
+            }
+
+            nextStep() {
+                if (this.currentStep < this.totalSteps - 1) {
+                    this.currentStep++;
+                    this.saveProgress();
+                    this.updateView();
+                }
+            }
+
+            prevStep() {
+                if (this.currentStep > 0) {
+                    this.currentStep--;
+                    this.updateView();
+                }
+            }
+
+            updateView() {
+                // Update steps visibility
+                this.steps.forEach((step, index) => {
+                    step.classList.toggle('active', index === this.currentStep);
+                });
+
+                // Update step indicators
+                this.stepIndicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index <= this.currentStep);
+                    indicator.classList.toggle('done', index < this.currentStep);
+                });
+
+                // Update progress bar
+                const progress = (this.currentStep / (this.totalSteps - 1)) * 100;
+                this.progressFill.style.width = progress + '%';
+
+                // Update buttons
+                this.prevBtn.disabled = this.currentStep === 0;
+                this.nextBtn.textContent = this.currentStep === this.totalSteps - 1 ? 'Fertig! 🎉' : 'Weiter →';
+            }
+
+            saveProgress() {
+                localStorage.setItem('huttenAnleitungStep', this.currentStep);
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem('huttenAnleitungStep');
+                this.currentStep = saved ? parseInt(saved) : 0;
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new HuttenAnleitung();
+        });
+    </script>
 </body>
 </html>
