@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏔️ Hütte Lienz - Schritt-für-Schritt Anleitung</title>
+    <title>🏔️ Hütte Lienz - Schritt-für-Schritt</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -26,9 +26,10 @@
         .steps { display: flex; justify-content: space-between; list-style: none; }
         .step { 
             text-align: center; font-size: 12px; font-weight: 500; color: #a0aec0; 
-            position: relative; flex: 1;
+            position: relative; flex: 1; cursor: pointer;
         }
         .step.active { color: #38a169; }
+        .step.done { color: #38a169; }
         .step.done::before { 
             content: '✅'; font-size: 18px; position: absolute; top: -25px; left: 50%; 
             transform: translateX(-50%);
@@ -36,7 +37,11 @@
         .step-container { display: none; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .step-container.active { display: block; animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .nav-buttons { display: flex; gap: 15px; justify-content: space-between; margin-top: 30px; }
+        .nav-buttons { display: flex; gap: 15px; justify-content: space-between; align-items: center; margin-top: 30px; }
+        .step-complete { 
+            margin-left: auto; display: flex; align-items: center; gap: 10px;
+        }
+        .complete-checkbox { transform: scale(1.6); accent-color: #48bb78; }
         .btn { 
             padding: 12px 24px; border: none; border-radius: 25px; font-weight: 600; 
             cursor: pointer; transition: all 0.2s; font-size: 16px;
@@ -49,16 +54,8 @@
         h1 { color: #2d3748; font-size: 2.2em; text-align: center; margin-bottom: 20px; }
         h2 { color: #2b6cb0; border-bottom: 3px solid #bee3f8; padding-bottom: 10px; margin-bottom: 20px; }
         h3 { color: #2c5282; margin: 25px 0 15px 0; }
-        .gps { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; padding: 20px; border-radius: 12px; text-align: center; 
-            font-weight: 600; margin: 20px 0;
-        }
-        .map-link { 
-            display: inline-block; background: #48bb78; color: white; 
-            padding: 10px 20px; border-radius: 20px; text-decoration: none; 
-            font-weight: 600; margin: 5px;
-        }
+        .gps { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; font-weight: 600; margin: 20px 0; }
+        .map-link { display: inline-block; background: #48bb78; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; margin: 5px; }
         img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 15px 0; }
         .warn { background: #fed7d7; border-left: 5px solid #e53e3e; padding: 15px; margin: 15px 0; border-radius: 8px; }
         .tip { background: #e6fffa; border-left: 4px solid #00b5ad; padding: 15px; margin: 15px 0; border-radius: 8px; }
@@ -66,12 +63,14 @@
         li { background: #f7fafc; margin: 12px 0; padding: 18px; border-radius: 12px; border-left: 4px solid #e2e8f0; }
         input[type="checkbox"] { transform: scale(1.4); margin-right: 12px; accent-color: #48bb78; }
         .checklist li { border-left-color: #48bb78; }
+        .final-checklist { background: #f0fff4; padding: 25px; border-radius: 16px; margin-top: 30px; }
         footer { text-align: center; padding: 30px; color: #718096; border-top: 1px solid #e2e8f0; margin-top: 40px; }
         @media (max-width: 768px) { 
             body { padding: 15px; } 
             h1 { font-size: 1.8em; }
             .steps { font-size: 10px; }
-            .nav-buttons { flex-direction: column; }
+            .nav-buttons { flex-direction: column; gap: 10px; }
+            .step-complete { margin-left: 0; margin-top: 10px; }
         }
     </style>
 </head>
@@ -138,22 +137,28 @@
     <!-- STEP 2: ABREISE -->
     <div class="step-container" data-step="2">
         <h2>2. Abreise</h2>
-        <h3>📋 Checkliste abhaken</h3>
-        <form>
-            <ul class="checklist">
-                <li><input type="checkbox"> Strom Boiler ausschalten</li>
-                <li><input type="checkbox"> Wasser abdrehen + entleeren</li>
-                <li><input type="checkbox"> Frostschutz einfüllen</li>
-                <li><input type="checkbox"> E-Heizung aufstellen</li>
-                <li><input type="checkbox"> Abschließen</li>
-            </ul>
-        </form>
+        <div class="final-checklist">
+            <h3>📋 Finale Checkliste</h3>
+            <form id="finalChecklist">
+                <ul class="checklist">
+                    <li><input type="checkbox" id="final1"> Strom Boiler ausschalten (3 Sicherungen)</li>
+                    <li><input type="checkbox" id="final2"> Wasser abdrehen + Boiler/Splkasten entleeren</li>
+                    <li><input type="checkbox" id="final3"> Wasserzuleitung absperren + Leitung entleeren</li>
+                    <li><input type="checkbox" id="final4"> Frostschutz einfüllen (0,15l/0,25l)</li>
+                    <li><input type="checkbox" id="final5"> E-Heizung aufstellen (Mitte Stube)</li>
+                    <li><input type="checkbox" id="final6"> Abschließen (Stube/Schuppen/Hütte)</li>
+                </ul>
+            </form>
+        </div>
     </div>
 
     <!-- NAVIGATION -->
     <div class="nav-buttons">
         <button class="btn btn-secondary" id="prevBtn" disabled>← Zurück</button>
-        <button class="btn btn-primary" id="nextBtn">Weiter →</button>
+        <div class="step-complete">
+            <label><input type="checkbox" class="complete-checkbox" id="stepComplete0"> Schritt erledigt</label>
+            <button class="btn btn-primary" id="nextBtn">Weiter →</button>
+        </div>
     </div>
 
     <footer style="margin-top: 50px;">
@@ -166,6 +171,7 @@
             constructor() {
                 this.currentStep = 0;
                 this.totalSteps = 3;
+                this.stepComplete = [false, false, false];
                 this.init();
             }
 
@@ -175,10 +181,26 @@
                 this.progressFill = document.getElementById('progressFill');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
+                this.completeCheckboxes = document.querySelectorAll('.complete-checkbox');
+                this.finalChecklist = document.querySelectorAll('#finalChecklist input[type="checkbox"]');
 
                 // Event Listeners
                 this.nextBtn.addEventListener('click', () => this.nextStep());
                 this.prevBtn.addEventListener('click', () => this.prevStep());
+                
+                // Step complete checkboxes
+                this.completeCheckboxes.forEach((checkbox, index) => {
+                    checkbox.addEventListener('change', (e) => {
+                        this.stepComplete[index] = e.target.checked;
+                        this.updateView();
+                        this.syncChecklist();
+                    });
+                });
+
+                // Final checklist sync
+                this.finalChecklist.forEach((checkbox, index) => {
+                    checkbox.addEventListener('change', () => this.syncFromFinal());
+                });
 
                 // Load saved progress
                 this.loadProgress();
@@ -187,6 +209,7 @@
 
             nextStep() {
                 if (this.currentStep < this.totalSteps - 1) {
+                    this.stepComplete[this.currentStep] = true;
                     this.currentStep++;
                     this.saveProgress();
                     this.updateView();
@@ -200,6 +223,24 @@
                 }
             }
 
+            syncChecklist() {
+                // Copy step completion to final checklist
+                const finalChecks = this.finalChecklist;
+                finalChecks[0].checked = this.stepComplete[0]; // Anreise
+                finalChecks[1].checked = this.stepComplete[1]; // Ankunft  
+                finalChecks[2].checked = this.stepComplete[2]; // Abreise start
+            }
+
+            syncFromFinal() {
+                // Update steps from final checklist changes
+                this.stepComplete[0] = this.finalChecklist[0].checked;
+                this.stepComplete[1] = this.finalChecklist[1].checked;
+                this.stepComplete[2] = this.finalChecklist[2].checked || 
+                                     (this.finalChecklist[3].checked && this.finalChecklist[4].checked);
+                this.completeCheckboxes.forEach((cb, i) => cb.checked = this.stepComplete[i]);
+                this.updateView();
+            }
+
             updateView() {
                 // Update steps visibility
                 this.steps.forEach((step, index) => {
@@ -208,26 +249,37 @@
 
                 // Update step indicators
                 this.stepIndicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index <= this.currentStep);
-                    indicator.classList.toggle('done', index < this.currentStep);
+                    indicator.classList.toggle('active', index === this.currentStep);
+                    indicator.classList.toggle('done', index < this.currentStep && this.stepComplete[index]);
                 });
 
-                // Update progress bar
-                const progress = (this.currentStep / (this.totalSteps - 1)) * 100;
+                // Update progress bar (based on completed steps)
+                const completedSteps = this.stepComplete.filter(Boolean).length;
+                const progress = Math.max((this.currentStep / (this.totalSteps - 1)) * 70, 
+                                        (completedSteps / this.totalSteps) * 100);
                 this.progressFill.style.width = progress + '%';
 
-                // Update buttons
+                // Update buttons & checkboxes
                 this.prevBtn.disabled = this.currentStep === 0;
+                this.completeCheckboxes[this.currentStep].checked = this.stepComplete[this.currentStep];
                 this.nextBtn.textContent = this.currentStep === this.totalSteps - 1 ? 'Fertig! 🎉' : 'Weiter →';
             }
 
             saveProgress() {
-                localStorage.setItem('huttenAnleitungStep', this.currentStep);
+                const progress = {
+                    currentStep: this.currentStep,
+                    stepComplete: this.stepComplete
+                };
+                localStorage.setItem('huttenAnleitung', JSON.stringify(progress));
             }
 
             loadProgress() {
-                const saved = localStorage.getItem('huttenAnleitungStep');
-                this.currentStep = saved ? parseInt(saved) : 0;
+                const saved = localStorage.getItem('huttenAnleitung');
+                if (saved) {
+                    const progress = JSON.parse(saved);
+                    this.currentStep = progress.currentStep || 0;
+                    this.stepComplete = progress.stepComplete || [false, false, false];
+                }
             }
         }
 
