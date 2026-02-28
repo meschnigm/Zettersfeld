@@ -204,7 +204,42 @@
 
                 // Load saved progress
                 this.loadProgress();
+<<<<<<< HEAD
                 this.updateView();
+=======
+                this.updateTree();
+                this.updateContent();
+                this.updateProgress();
+                    this.updateTree();
+                    this.updateContent();
+                    this.updateProgress();
+                    this.updateView();
+                    const step = parseInt(item.dataset.step);
+                    const section = item.dataset.section;
+                    item.classList.toggle('active', step === this.currentStep && section === this.currentSection);
+                    item.classList.toggle('done', this.stepComplete[`${step}-${section}`]);
+                });
+            }
+
+            updateContent() {
+                this.stepContainers.forEach(container => {
+                    container.classList.toggle('active', parseInt(container.dataset.step) === this.currentStep);
+                });
+                // Bei Schritt 0 (Anreise) alle relevanten Abschnitte anzeigen
+                if (this.currentStep === 0) {
+                    this.sections.forEach(section => {
+                        if (["anreise", "anreise-adresse", "anreise-fussweg"].includes(section.id)) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                } else {
+                    this.sections.forEach(section => {
+                        section.style.display = section.id === this.currentSection ? 'block' : 'none';
+                    });
+                }
+>>>>>>> 615f747 (Fix: Zeige alle Anreise-Abschnitte bei Schritt 0)
             }
 
             nextStep() {
