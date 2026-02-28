@@ -3,88 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anleitung Hütte Lienz - Zettersfeld</title>
+    <title>🏔️ Anleitung Hütte Lienz - Zettersfeld</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; background: #f9f9f9; }
-        h1, h2, h3 { color: #2c3e50; }
-        h1 { text-align: center; }
-        ul { list-style-type: none; padding-left: 0; }
-        li { margin: 10px 0; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        input[type="checkbox"] { transform: scale(1.5); margin-right: 10px; }
-        .warn { background: #fff3cd; border-left: 4px solid #ffc107; padding-left: 15px; }
-        .gps { font-size: 1.2em; font-weight: bold; color: #007bff; }
-        @media (max-width: 600px) { body { padding: 10px; } }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            max-width: 900px; margin: 0 auto; padding: 20px; line-height: 1.7; 
+            color: #2d3748; background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); 
+        }
+        header { text-align: center; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        h1 { color: #2d3748; font-size: 2.2em; margin: 0; }
+        h2 { color: #2b6cb0; border-bottom: 3px solid #bee3f8; padding-bottom: 10px; }
+        h3 { color: #2c5282; margin-top: 30px; }
+        .gps { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; padding: 20px; border-radius: 12px; text-align: center; 
+            font-weight: 600; font-size: 1.1em; margin: 20px 0;
+        }
+        img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 15px 0; }
+        .warn { background: #fed7d7; border-left: 5px solid #e53e3e; padding: 15px; margin: 15px 0; border-radius: 8px; }
+        ul { list-style: none; padding: 0; }
+        li { 
+            background: white; margin: 12px 0; padding: 18px; border-radius: 12px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: relative; 
+        }
+        input[type="checkbox"] { 
+            transform: scale(1.4); margin-right: 12px; accent-color: #48bb78; 
+        }
+        .checklist li { border-left: 4px solid #48bb78; }
+        .section { background: white; padding: 25px; border-radius: 16px; margin: 25px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        footer { text-align: center; padding: 30px; color: #718096; border-top: 1px solid #e2e8f0; margin-top: 40px; }
+        @media (max-width: 768px) { 
+            body { padding: 15px; } 
+            h1 { font-size: 1.8em; }
+            img { border-radius: 8px; }
+        }
     </style>
 </head>
 <body>
-    <h1>🏔️ Anleitung Hütte Lienz (Version 2026)</h1>
-    <p class="gps">GPS: 46.865788° N, 12.788949° E<br>Fußweg vom Sporthotel Hochlienz Zettersfeld 1, 9900 Lienz</p>[file:1]
+    <header>
+        <h1>🏔️ Anleitung Hütte Lienz</h1>
+        <div class="gps">
+            <img src="bilder/GPS-Koordinaten.PNG" alt="GPS-Koordinaten" style="max-width: 280px;">
+            46.865788° N, 12.788949° E<br>
+            <small>Fußweg vom Sporthotel Hochlienz Zettersfeld 1, 9900 Lienz</small>
+        </div>
+        <img src="bilder/Luftaufnahme_Weg.png" alt="Luftaufnahme Weg zur Hütte" style="max-width: 100%;">
+    </header>
 
-    <h2>1. Ankunft</h2>
-    <h3>1.1 Strom einschalten</h3>
-    <ul>
-        <li>Sicherungskasten außen an der Vorderseite. Schlüssel am Esstisch.</li>
-        <li class="warn">Boiler-Sicherungen ZUNÄCHST AUS lassen! Erst nach Wasserfüllen einschalten.</li>
-        <li>Alle anderen wie auf Bild (automatisch).</li>
-    </ul>
+    <div class="section">
+        <h2>1. Ankunft</h2>
 
-    <h3>1.2 Fenster öffnen</h3>
-    <ul><li>Fensterläden öffnen und außen verriegeln. Holztafeln aus Kästen als Einbruchschutz.</li></ul>
-
-    <h3>1.3 E-Heizung abbauen</h3>
-    <ul><li>Verstauen unter Waschbecken.</li></ul>
-
-    <h3>1.4 Ofen in Betrieb</h3>
-    <ul>
-        <li>Bereit zum Anzünden (Streichhölzer/Feuerzeug dabei).</li>
-        <li>Unter 0°C: Dauerheizen mit Koks (Schuppen hinter Hütte).</li>
-        <li>Anzünden mit Zapfen/Zeitung (WC).</li>
-    </ul>
-
-    <h3>1.5 Wasser aufdrehen</h3>
-    <ul>
-        <li class="warn">Alle Auslassstellen schließen. Kugelventil Boiler geschlossen, Abdeckkappe ab.</li>
-        <li>Keller: Wasserschacht öffnen, Zulaufhahn drehen. Bei Bedarf Hauptventil.</li>
-        <li>Entlüften: Warmwasser laufen lassen.</li>
-    </ul>
-
-    <h3>1.6 Boiler starten</h3>
-    <ul><li>Boiler-Sicherungen einschalten. Drehschalter auf ECO, Startknopf drücken.</li></ul>[file:1]
-
-    <h2>2. Abreise</h2>
-    <h3>Checkliste abhaken (Zählerstände notieren)</h3>
-    <form>
+        <h3>1.1 Strom einschalten</h3>
+        <img src="bilder/sicherungskasten.jpg" alt="Sicherungskasten" style="max-width: 100%;">
         <ul>
-            <li><input type="checkbox"> Strom Boiler aus</li>
-            <li><input type="checkbox"> Wasser abdrehen, Boiler/Splkasten entleeren</li>
-            <li><input type="checkbox"> Wasserzuleitung absperren, Leitung/Garten entleeren</li>
-            <li><input type="checkbox"> Ofen vorbereiten (saubermachen, befüllen)</li>
-            <li><input type="checkbox"> Endreinigung (Aufräumen, saugen, Kühlschrank leer)</li>
-            <li><input type="checkbox"> Fenster schließen, Holztafeln ein</li>
-            <li><input type="checkbox"> E-Heizung aufstellen (Mitte Stube, Regler prüfen)</li>
-            <li><input type="checkbox"> Kaffeemaschine frostfrei (Dampftaste, Tank entleeren)</li>
-            <li><input type="checkbox"> Frostschutz einfüllen (0,15l Waschbecken, 0,25l WC)</li>
-            <li><input type="checkbox"> Strom aus (außer GSM + Hauptsicherungen)</li>
-            <li><input type="checkbox"> Abschließen (Stube, Schuppen, Hütte)</li>
+            <li>Sicherungskasten außen an der Vorderseite. Schlüssel am Esstisch.</li>
+            <li class="warn">🔴 Boiler-Sicherungen ZUNÄCHST AUS lassen! Erst nach Wasserfüllen einschalten.</li>
+            <li>Alle anderen Sicherungen wie abgebildet.</li>
         </ul>
-    </form>
 
-    <h3>2.2 Wasser abdrehen</h3>
-    <ul>
-        <li>Auslassstellen öffnen (10 Min. ablaufen lassen).</li>
-        <li>Kugelventil Boiler öffnen, Rest in Topf.</li>
-        <li>Keller: Zulauf abdrehen, Hauptventil schließen, Kugelhahn/Garten entleeren.</li>
-    </ul>
+        <h3>1.2 Fenster öffnen</h3>
+        <ul>
+            <li>Fensterläden öffnen und außen verriegeln.</li>
+            <li>Holztafeln aus den Fensterkästen als Einbruchschutz.</li>
+        </ul>
 
-    <h3>Weitere Tipps</h3>
-    <ul>
-        <li>Schlüssel/Taschenlampe auf Tisch.</li>
-        <li>Vorräte besorgen/defekte melden.</li>
-    </ul>[file:1]
+        <h3>1.3 E-Heizung abbauen</h3>
+        <img src="bilder/E-Heizkörper Einstellung.jpg" alt="E-Heizkörper Einstellung">
+        <ul>
+            <li>E-Heizung unter dem Waschbecken verstauen.</li>
+        </ul>
 
-    <hr>
-    <p style="text-align: center; font-size: 0.9em; color: #666;">
-        Aktualisiert Feb 2026 | <a href="https://github.com/meschnigm/Zettersfeld/edit/main/index.html">Editieren</a>
-    </p>
+        <h3>1.4 Ofen in Betrieb nehmen</h3>
+        <img src="bilder/Heizung_Stube.JPG" alt="Ofen Stube">
+        <ul>
+            <li>Ofen bereit zum Anzünden (Streichhölzer/Feuerzeug dabei).</li>
+            <li>Bei <0°C: Dauerheizen mit Koks aus dem Schuppen hinter der Hütte.</li>
+            <li>Anzünden mit Tannenzapfen (vor Hütte) und Zeitung (WC).</li>
+        </ul>
+
+        <h3>1.5 Wasser aufdrehen</h3>
+        <img src="bilder/Boiler Wasserhahn 2.jpg" alt="Boiler Wasserhahn">
+        <ul>
+            <li class="warn">Alle Auslassstellen schließen! Kugelventil Boiler geschlossen, Messing-Abdeckkappe ab.</li>
+            <li>Keller: Wasserschacht öffnen → Zulaufhahn drehen → Bei Bedarf Hauptventil.</li>
+            <li>Leitungen entlüften: Warmwasser laufen lassen bis Luft weg ist.</li>
+        </ul>
+
+        <h3>1.6 Boiler in Betrieb nehmen</h3>
+        <img src="bilder/Boiler Kugelhahn.tif" alt="Boiler Kugelhahn">
+        <ul>
+            <li>Boiler-Sicherungen einschalten.</li>
+            <li>Drehschalter auf ECO → Rechteckiger Startknopf drücken.</li>
+            <li>Warmwasservorrat an Balkenanzeige ablesen.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Abreise</h2>
+        
+        <h3>📋 Checkliste abhaken (Zählerstände notieren!)</h3>
+        <form>
+            <ul class="checklist">
+                <li><input type="checkbox"> Strom Boiler ausschalten</li>
+                <li><input type="checkbox"> Wasser abdrehen, Boiler/Splkasten entleeren</li>
+                <li><input type="checkbox"> Wasserzuleitung absperren, Gartenanschluss entleeren</li>
+                <li><input type="checkbox"> Ofen saubermachen und neu befüllen</li>
+                <li><input type="checkbox"> Endreinigung (Dusche, WC, saugen, Kühlschrank leer)</li>
+                <li><input type="checkbox"> Fenster schließen, Holztafeln einstellen</li>
+                <li><input type="checkbox"> E-Heizung aufstellen (Mitte Stube)</li>
+                <li><input type="checkbox"> Kaffeemaschine frostfrei machen</li>
+                <li><input type="checkbox"> Frostschutz einfüllen (0,15l Waschbecken, 0,25l WC)</li>
+                <li><input type="checkbox"> Strom aus (außer GSM + Hauptsicherungen)</li>
+                <li><input type="checkbox"> Abschließen (Stube, Schuppen, Hütte)</li>
+            </ul>
+        </form>
+
+        <h3>2.2 Wasser abdrehen & Boiler entleeren</h3>
+        <img src="bilder/Heizung_Bad.JPG" alt="Heizung Bad">
+        <ul>
+            <li>Alle Wasserhähne öffnen (Küche, Bad, Dusche) → 10 Min warten.</li>
+            <li>Kugelventil Boiler öffnen → Restwasser in Topf.</li>
+            <li>Keller: Zulauf abdrehen → Hauptventil schließen → Kugelhahn öffnen.</li>
+        </ul>
+
+        <h3>Frostschutz Kaffeemaschine</h3>
+        <ul>
+            <li>Dampftaste drücken → Bis Dampf ausgeht warten.</li>
+            <li>Wassertank entfernen → Entleeren → Ausschalten.</li>
+        </ul>
+    </div>
+
+    <div style="text-align: center; margin: 40px 0;">
+        <img src="bilder/Alm - Foto Winter.jpg" alt="Alm Winter" style="max-width: 100%;">
+        <p style="font-size: 1.1em; color: #4a5568; margin-top: 15px;">
+            🎿 Guten Aufenthalt in der Hütte Lienz! 🏔️
+        </p>
+    </div>
+
+    <footer>
+        <p><strong>Version Feb 2026</strong> | 
+        <a href="https://github.com/meschnigm/Zettersfeld/edit/main/index.html" style="color: #4299e1;">📝 Editieren</a> | 
+        <a href="https://github.com/meschnigm/Zettersfeld" style="color: #4299e1;">🐙 GitHub</a></p>
+        <p>Schlüssel & Taschenlampe auf den Esstisch legen!</p>
+    </footer>
 </body>
 </html>
