@@ -233,8 +233,8 @@
             <button class="btn btn-secondary" id="prevBtn" disabled>← Zurück</button>
             <div class="step-complete">
                 <label><input type="checkbox" class="complete-checkbox" id="stepComplete"> Schritt erledigt</label>
-                <button class="btn btn-primary" id="nextBtn">Weiter →</button>
             </div>
+            <button class="btn btn-primary" id="nextBtn">Weiter →</button>
         </div>
     </main>
 
@@ -360,9 +360,8 @@
             nextStep() {
                 if (this.currentStep < 2) {
                     this.currentStep++;
-                    this.currentSection = Object.values(this.treeItems[this.currentStep * 2]).find(item => 
-                        parseInt(item.dataset.step) === this.currentStep
-                    )?.dataset.section || 'anreise';
+                    const defaultSections = ['anreise', 'ankunft', 'abreise', 'allgemein'];
+                    this.currentSection = defaultSections[this.currentStep] || 'anreise';
                     this.updateTree();
                     this.updateContent();
                     this.updateProgress();
