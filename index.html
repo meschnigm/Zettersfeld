@@ -220,6 +220,7 @@
                         <li class="tree-item" data-step="3" data-section="beleuchtung">💡 Beleuchtung</li>
                         <li class="tree-item" data-step="3" data-section="skibindung">⛷️ Skibindung einstellen</li>
                         <li class="tree-item" data-step="3" data-section="skischuhtrockner">👢 Skischuhtrockner</li>
+                        <li class="tree-item" data-step="3" data-section="hofladen">🧺 Hofladen</li>
                         <li class="tree-item" data-step="3" data-section="muellkalender">🗑️ Müllkalender</li>
                     </ul>
                 </li>
@@ -240,6 +241,7 @@
                                 <li><a href="#beleuchtung" onclick="showAllgemeinSection('beleuchtung')">💡 Beleuchtung</a></li>
                                 <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
+                                <li><a href="#hofladen" onclick="showAllgemeinSection('hofladen')">🧺 Hofladen</a></li>
                                 <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müllkalender</a></li>
                             </ul>
                         </div>
@@ -385,6 +387,19 @@
                         </div>
                         <img src="https://oskari.at/cdn/shop/files/Schalter_und_Uhr.jpg?v=1771948162" alt="Schalter und Zeitschaltuhr auf der rechten Geräteseite">
                     </div>
+                    <div id="hofladen" style="display:none; margin-top:20px;">
+                        <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
+                        <h3>🧺 Hofladen</h3>
+                        <div class="tip">
+                            Der Hofladen liegt direkt auf dem Weg und bietet regionale Produkte wie <strong>Brot, Butter, Milch, Eier und Speck</strong>.
+                        </div>
+                        <ul>
+                            <li><strong>Kontakt:</strong> Martina Baumgartner</li>
+                            <li><strong>Telefon:</strong> <a href="tel:+436606229013">+43 660 6229013</a></li>
+                            <li><strong>Adresse:</strong> Prappernitze 1, 9904 Thurn</li>
+                            <li><strong>Vorbestellung:</strong> per WhatsApp möglich.</li>
+                        </ul>
+                    </div>
                 </div>
         <!-- PROGRESS BAR -->
         <div class="progress-container">
@@ -484,7 +499,7 @@
                 // Interaktiver Menübaum für Allgemein
                 function showAllgemeinSection(sectionId) {
                     const menu = document.getElementById('menubaum');
-                    const detailSections = ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','muellkalender'];
+                    const detailSections = ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','muellkalender'];
                     detailSections.forEach(id => {
                         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
                     });
@@ -506,7 +521,7 @@
                 this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #hofladen, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
@@ -621,14 +636,14 @@
                 } else if (this.currentStep === 3) {
                     // Allgemein: Menübaum und keine anderen Abschnitte
                     this.sections.forEach(section => {
-                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","muellkalender"].includes(section.id)) {
+                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","hofladen","muellkalender"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
                         }
                     });
                     // Nur Menübaum anzeigen, keine Detailabschnitte
-                    ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','muellkalender'].forEach(id => {
+                    ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','muellkalender'].forEach(id => {
                         document.getElementById(id).style.display = 'none';
                     });
                 } else {
