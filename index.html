@@ -36,11 +36,13 @@
         .tree-item .children { display: none; }
         .tree-item.expanded .children { display: block; }
         .main-content { 
-            flex: 1; padding: 20px; overflow-y: auto; margin-left: 0;
+            flex: 1; display: flex; flex-direction: column;
+            padding: 20px; overflow-y: auto; margin-left: 0;
         }
         .progress-container { 
             position: sticky; top: 0; background: white; padding: 15px; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; margin-bottom: 20px;
+            order: 1;
         }
         .chapter-nav {
             display: flex;
@@ -48,6 +50,7 @@
             flex-wrap: wrap;
             margin-top: 10px;
             margin-bottom: 12px;
+            order: 2;
         }
         .chapter-btn {
             padding: 8px 14px;
@@ -65,10 +68,10 @@
         }
         .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #48bb78, #38a169); width: 0%; transition: width 0.3s ease; border-radius: 4px; }
-        .step-container { display: none; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .step-container { display: none; order: 3; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .step-container.active { display: block; animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .nav-buttons { display: flex; gap: 15px; justify-content: space-between; align-items: center; margin-top: 30px; }
+        .nav-buttons { display: flex; order: 4; gap: 15px; justify-content: space-between; align-items: center; margin-top: 30px; }
         .step-complete { display: flex; align-items: center; gap: 10px; margin-left: auto; }
         .complete-checkbox { transform: scale(1.6); accent-color: #48bb78; }
         .btn { padding: 12px 24px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 16px; }
@@ -180,7 +183,7 @@
                 <!-- STEP 3: ALLGEMEIN -->
                 <div class="step-container" data-step="3">
                     <div id="allgemein">
-                        <h2>🛠️ 3. Allgemein</h2>
+                        <h2>🛠️ Allgemein</h2>
                         <div id="menubaum" style="background: #e6fffa; padding: 25px; border-radius: 12px;">
                             <ul style="font-size:1.2em;">
                                 <li><a href="#einrichtung" onclick="showAllgemeinSection('einrichtung')">🪑 Einrichtung</a></li>
@@ -462,7 +465,7 @@
         <!-- STEP 0: ANREISE -->
         <div class="step-container active" data-step="0">
             <div id="anreise">
-                <h2>🚗 0. Anreise</h2>
+                <h2>🚗 Anreise</h2>
                 <div id="anreise-adresse" style="background: #e6fffa; padding: 25px; border-radius: 12px; text-align: center; font-size: 1.4em; font-weight: bold;">
                     🏔️ Hütte Lienz<br>
                     <span style="font-size: 1.3em;">Zettersfeld 14</span><br>
@@ -519,10 +522,10 @@
         <!-- STEP 1: ANKUNFT -->
         <div class="step-container" data-step="1">
             <div id="ankunft">
-                <h2>1. Ankunft</h2>
+                <h2>Ankunft</h2>
             </div>
             <div id="strom">
-                <h3>1.1 Strom einschalten</h3>
+                <h3>Strom einschalten</h3>
                 <img src="bilder/Sicherungskasten 2012_2.jpg" alt="Sicherungskasten">
                 <ul>
                     <li>Sicherungskasten außen. Schlüssel am Esstisch.</li>
@@ -530,7 +533,7 @@
                 </ul>
             </div>
             <div id="wasser">
-                <h3>1.5 Wasser aufdrehen</h3>
+                <h3>Wasser aufdrehen</h3>
                 <img src="bilder/Boiler Wasserhahn 2.jpg" alt="Boiler">
                 <ul>
                     <li class="warn">Alle Auslassstellen schließen! Kugelventil Boiler geschlossen.</li>
@@ -538,7 +541,7 @@
                 </ul>
             </div>
             <div id="boiler">
-                <h3>1.6 Boiler starten</h3>
+                <h3>Boiler starten</h3>
                 <img src="bilder/Boiler Kugelhahn.tif" alt="Boiler Kugelhahn">
                 <ul><li>Boiler-Sicherungen einschalten → ECO → Startknopf.</li></ul>
             </div>
@@ -547,7 +550,7 @@
         <!-- STEP 2: ABREISE -->
         <div class="step-container" data-step="2">
             <div id="abreise">
-                <h2>2. Abreise</h2>
+                <h2>Abreise</h2>
             </div>
             <div id="checkliste" class="final-checklist">
                 <h3>📋 Finale Checkliste</h3>
