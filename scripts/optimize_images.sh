@@ -4,7 +4,7 @@ set -euo pipefail
 INPUT_DIR="bilder"
 OUTPUT_DIR="bilder/optimized"
 WIDTHS=(800 1600)
-QUALITY=78
+QUALITY=88
 DELETE_ORIGINALS=false
 
 if [[ "${1:-}" == "--delete-originals" ]]; then
