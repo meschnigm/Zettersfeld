@@ -498,24 +498,12 @@
             <div id="anreise-heizung">
                 <h3>🔥 Heizung aus der Ferne einschalten</h3>
                 <div class="tip">
-                    Es gibt <strong>2 Elektroheizkörper der Marke Mill</strong>. Empfehlung: Heizkörper ca. <strong>10 Stunden vor geplanter Ankunft</strong> einschalten.
+                    Es gibt 2 Elektroheizkörper der Marke Mill. Ich kann diese 10h vor eurer Ankunft einschalten.<br><br>
+                    <strong>Alternativ:</strong><br>
+                    <a class="map-link" target="_blank" rel="noopener" href="https://millnorway.de/mill-app/">Mill-App Infos / Download</a><br>
+                    Nutzer: m.... punkt m...@web.de<br>
+                    Passwort: t7v!pGjAJ269e9j#
                 </div>
-                <p>
-                    <a class="map-link" target="_blank" rel="noopener" href="https://millnorway.de/mill-app/">Mill-App Infos / Download</a>
-                </p>
-                <h3>Kurzanleitung (Mill App)</h3>
-                <ul>
-                    <li>Mill-App auf iOS oder Android installieren.</li>
-                    <li>Mit den unten stehenden Zugangsdaten anmelden.</li>
-                    <li>Standort/Haus auswählen und den Status der Heizkörper prüfen (EIN/AUS).</li>
-                    <li>Gewünschte Temperatur setzen oder Heizkörper einschalten.</li>
-                    <li>Heizkörper etwa 10 Stunden vor Ankunft aktivieren.</li>
-                </ul>
-                <h3>Zugang</h3>
-                <ul>
-                    <li><strong>Nutzer:</strong> m.... punkt m...@web.de</li>
-                    <li><strong>Passwort:</strong> t7v!pGjAJ269e9j#</li>
-                </ul>
             </div>
         </div>
 
@@ -667,7 +655,7 @@
                             year: 'numeric'
                         });
                         const timeLabel = currentDate < timeSwitchDate ? '16:00 – 17:00 Uhr' : '16:00 – 16:30 Uhr';
-                        termine.push(`${dateLabel}, ${timeLabel}`);
+                        termine.push({ dateLabel, timeLabel });
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
@@ -683,7 +671,9 @@
                     target.textContent = 'Keine Termine in den kommenden 3 Wochen gefunden.';
                     return;
                 }
-                target.innerHTML = termine.map(termin => `• ${termin}`).join('<br>');
+                target.innerHTML = termine
+                    .map(termin => `• ${termin.dateLabel}<br>&nbsp;&nbsp;${termin.timeLabel}`)
+                    .join('<br><br>');
             }
 
             updateTree() {
