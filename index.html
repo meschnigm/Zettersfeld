@@ -188,6 +188,11 @@
             color: #2d3748;
             line-height: 1.5;
         }
+        .split-checklist .split-media {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
         .split-checklist .split-media .step-image {
             max-width: 100%;
             margin: 0;
@@ -668,10 +673,15 @@
                     <img class="step-image" src="bilder/optimized/sicherungskasten-2012-2-800.webp" srcset="bilder/optimized/sicherungskasten-2012-2-800.webp 800w, bilder/optimized/sicherungskasten-2012-2-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Sicherungskasten Boiler Strom aus">
                 </div>
             </div>
-            <div id="abreise-wasser-boiler" class="final-checklist">
-                <h3>Wasser abdrehen und Boiler entleeren</h3>
-                <img class="step-image" src="bilder/optimized/boiler-wasserhahn-2-800.webp" srcset="bilder/optimized/boiler-wasserhahn-2-800.webp 800w, bilder/optimized/boiler-wasserhahn-2-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Wasserhahn für Boiler">
-                <img class="step-image" src="bilder/optimized/boiler-kugelhahn-800.webp" srcset="bilder/optimized/boiler-kugelhahn-800.webp 800w, bilder/optimized/boiler-kugelhahn-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Kugelhahn für Boiler">
+            <div id="abreise-wasser-boiler" class="final-checklist split-checklist">
+                <div class="split-text">
+                    <h3>Wasser abdrehen und Boiler entleeren</h3>
+                    <p>Wasserzulauf schließen und anschließend den Boiler über die vorgesehenen Ventile entleeren.</p>
+                </div>
+                <div class="split-media">
+                    <img class="step-image" src="bilder/optimized/boiler-wasserhahn-2-800.webp" srcset="bilder/optimized/boiler-wasserhahn-2-800.webp 800w, bilder/optimized/boiler-wasserhahn-2-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Wasserhahn für Boiler">
+                    <img class="step-image" src="bilder/optimized/boiler-kugelhahn-800.webp" srcset="bilder/optimized/boiler-kugelhahn-800.webp 800w, bilder/optimized/boiler-kugelhahn-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Kugelhahn für Boiler">
+                </div>
             </div>
             <div id="abreise-ofen" class="final-checklist">
                 <h3>Ofen vorbereiten</h3>
@@ -682,16 +692,26 @@
             <div id="abreise-fensterlaeden" class="final-checklist">
                 <h3>Fensterläden schließen</h3>
             </div>
-            <div id="abreise-eheizung" class="final-checklist">
-                <h3>E-Heizung aufstellen</h3>
-                <img class="step-image" src="bilder/optimized/e-heizkoerper-einstellung-800.webp" srcset="bilder/optimized/e-heizkoerper-einstellung-800.webp 800w, bilder/optimized/e-heizkoerper-einstellung-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="E-Heizkörper Einstellung">
+            <div id="abreise-eheizung" class="final-checklist split-checklist">
+                <div class="split-text">
+                    <h3>E-Heizung aufstellen</h3>
+                    <p>Die E-Heizung wieder an den vorgesehenen Platz stellen und auf die gewünschte Grundeinstellung setzen.</p>
+                </div>
+                <div class="split-media">
+                    <img class="step-image" src="bilder/optimized/e-heizkoerper-einstellung-800.webp" srcset="bilder/optimized/e-heizkoerper-einstellung-800.webp 800w, bilder/optimized/e-heizkoerper-einstellung-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="E-Heizkörper Einstellung">
+                </div>
             </div>
             <div id="abreise-kaffeemaschine" class="final-checklist">
                 <h3>Kaffeemaschine frostsicher machen</h3>
             </div>
-            <div id="abreise-frostschutz" class="final-checklist">
-                <h3>Frostschutz WC und Waschbecken einfüllen</h3>
-                <img class="step-image" src="bilder/optimized/wasserhahn-in-der-dusche-800.webp" srcset="bilder/optimized/wasserhahn-in-der-dusche-800.webp 800w, bilder/optimized/wasserhahn-in-der-dusche-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Wasserhahn in der Dusche">
+            <div id="abreise-frostschutz" class="final-checklist split-checklist">
+                <div class="split-text">
+                    <h3>Frostschutz WC und Waschbecken einfüllen</h3>
+                    <p>Frostschutzmittel in die vorgesehenen Abflüsse geben, damit Leitungen und Siphons bei Kälte geschützt sind.</p>
+                </div>
+                <div class="split-media">
+                    <img class="step-image" src="bilder/optimized/wasserhahn-in-der-dusche-800.webp" srcset="bilder/optimized/wasserhahn-in-der-dusche-800.webp 800w, bilder/optimized/wasserhahn-in-der-dusche-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Wasserhahn in der Dusche">
+                </div>
             </div>
             <div id="abreise-strom-aus" class="final-checklist">
                 <h3>Strom abschalten</h3>
