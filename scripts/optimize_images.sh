@@ -5,6 +5,11 @@ INPUT_DIR="bilder"
 OUTPUT_DIR="bilder/optimized"
 WIDTHS=(800 1600)
 QUALITY=78
+DELETE_ORIGINALS=false
+
+if [[ "${1:-}" == "--delete-originals" ]]; then
+  DELETE_ORIGINALS=true
+fi
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -21,10 +26,11 @@ slugify() {
   echo "$name"
 }
 
-shopt -s nullglob
-for input in "$INPUT_DIR"/*.{jpg,jpeg,JPG,JPEG,png,PNG,tif,tiff,TIF,TIFF}; do
-  base="$(basename "$input")"
-  stem="${base%.*}"
+mapfile -d '' files < <(find "$INPUT_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.tif" -o -iname "*.tiff" \) ! -path "$OUTPUT_DIR/*" -print0)
+
+for input in "${files[@]}"; do
+  rel="${input#$INPUT_DIR/}"
+  stem="${rel%.*}"
   slug="$(slugify "$stem")"
 
   for width in "${WIDTHS[@]}"; do
@@ -36,6 +42,13 @@ for input in "$INPUT_DIR"/*.{jpg,jpeg,JPG,JPEG,png,PNG,tif,tiff,TIF,TIFF}; do
       "$output"
   done
 
+  if [[ "$DELETE_ORIGINALS" == true && "$input" != "$OUTPUT_DIR"/* ]]; then
+    rm -f "$input"
+  fi
+
 done
 
 echo "Optimierte Bilder erstellt in: $OUTPUT_DIR"
+if [[ "$DELETE_ORIGINALS" == true ]]; then
+  echo "Originaldateien wurden gelöscht."
+fi
