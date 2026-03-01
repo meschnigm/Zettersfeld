@@ -168,6 +168,30 @@
         li { background: #f7fafc; margin: 12px 0; padding: 18px; border-radius: 12px; border-left: 4px solid #e2e8f0; }
         input[type="checkbox"] { transform: scale(1.4); margin-right: 12px; accent-color: #48bb78; }
         .final-checklist { background: #f0fff4; padding: 25px; border-radius: 16px; margin-top: 30px; }
+        .split-checklist {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(260px, 1fr);
+            gap: 18px;
+            align-items: start;
+        }
+        .split-checklist .split-text {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+        }
+        .split-checklist .split-text h3 {
+            margin-top: 0;
+        }
+        .split-checklist .split-text p {
+            margin: 0;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+        .split-checklist .split-media .step-image {
+            max-width: 100%;
+            margin: 0;
+        }
         @media (max-width: 768px) { 
             .main-content { margin-left: 0 !important; }
             .chapter-nav {
@@ -224,6 +248,13 @@
             }
             .btn {
                 min-height: 44px;
+            }
+            .split-checklist {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .split-checklist .split-text {
+                padding: 12px;
             }
         }
     </style>
@@ -627,9 +658,14 @@
                     <li>12) Vorräte und Hinweise</li>
                 </ul>
             </div>
-            <div id="abreise-strom-boiler" class="final-checklist">
-                <h3>Strom Boiler ausschalten</h3>
-                <img class="step-image" src="bilder/optimized/sicherungskasten-2012-2-800.webp" srcset="bilder/optimized/sicherungskasten-2012-2-800.webp 800w, bilder/optimized/sicherungskasten-2012-2-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Sicherungskasten Boiler Strom aus">
+            <div id="abreise-strom-boiler" class="final-checklist split-checklist">
+                <div class="split-text">
+                    <h3>Strom Boiler ausschalten</h3>
+                    <p>Am Sicherungskasten die Boiler-Sicherungen ausschalten, bevor ihr mit dem Entleeren und den weiteren Abreise-Schritten weitermacht.</p>
+                </div>
+                <div class="split-media">
+                    <img class="step-image" src="bilder/optimized/sicherungskasten-2012-2-800.webp" srcset="bilder/optimized/sicherungskasten-2012-2-800.webp 800w, bilder/optimized/sicherungskasten-2012-2-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Sicherungskasten Boiler Strom aus">
+                </div>
             </div>
             <div id="abreise-wasser-boiler" class="final-checklist">
                 <h3>Wasser abdrehen und Boiler entleeren</h3>
