@@ -221,6 +221,7 @@
                         <li class="tree-item" data-step="3" data-section="skibindung">⛷️ Skibindung einstellen</li>
                         <li class="tree-item" data-step="3" data-section="skischuhtrockner">👢 Skischuhtrockner</li>
                         <li class="tree-item" data-step="3" data-section="hofladen">🧺 Hofladen</li>
+                        <li class="tree-item" data-step="3" data-section="notfall">🚨 Notfall</li>
                         <li class="tree-item" data-step="3" data-section="muellkalender">🗑️ Müllkalender</li>
                     </ul>
                 </li>
@@ -242,6 +243,7 @@
                                 <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
                                 <li><a href="#hofladen" onclick="showAllgemeinSection('hofladen')">🧺 Hofladen</a></li>
+                                <li><a href="#notfall" onclick="showAllgemeinSection('notfall')">🚨 Notfall</a></li>
                                 <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müllkalender</a></li>
                             </ul>
                         </div>
@@ -406,6 +408,32 @@
                             <li><strong>Vorbestellung:</strong> per WhatsApp möglich.</li>
                         </ul>
                     </div>
+                    <div id="notfall" style="display:none; margin-top:20px;">
+                        <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
+                        <h3>🚨 Notfall</h3>
+
+                        <h3>Notrufnummern Österreich</h3>
+                        <ul>
+                            <li><strong>112</strong> – Europäischer Notruf</li>
+                            <li><strong>122</strong> – Feuerwehr</li>
+                            <li><strong>133</strong> – Polizei</li>
+                            <li><strong>144</strong> – Rettung</li>
+                            <li><strong>140</strong> – Bergrettung</li>
+                        </ul>
+
+                        <h3>Krankenhaus in Lienz</h3>
+                        <ul>
+                            <li><strong>BKH Lienz</strong></li>
+                            <li><strong>Adresse:</strong> Emanuel von Hibler-Straße 5, 9900 Lienz</li>
+                            <li><strong>Telefon:</strong> <a href="tel:+4348526060">+43 (0) 4852 606-0</a></li>
+                        </ul>
+
+                        <h3>Kontakt vor Ort bei Problemsituationen</h3>
+                        <ul>
+                            <li><strong>Martin Baumgartner</strong></li>
+                            <li><strong>Telefon:</strong> <a href="tel:+436643461632">+43 664 3461632</a></li>
+                        </ul>
+                    </div>
                 </div>
         <!-- PROGRESS BAR -->
         <div class="progress-container">
@@ -509,7 +537,7 @@
                 // Interaktiver Menübaum für Allgemein
                 function showAllgemeinSection(sectionId) {
                     const menu = document.getElementById('menubaum');
-                    const detailSections = ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','muellkalender'];
+                    const detailSections = ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','notfall','muellkalender'];
                     detailSections.forEach(id => {
                         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
                     });
@@ -531,7 +559,7 @@
                 this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #hofladen, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #hofladen, #notfall, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
@@ -646,14 +674,14 @@
                 } else if (this.currentStep === 3) {
                     // Allgemein: Menübaum und keine anderen Abschnitte
                     this.sections.forEach(section => {
-                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","hofladen","muellkalender"].includes(section.id)) {
+                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","hofladen","notfall","muellkalender"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
                         }
                     });
                     // Nur Menübaum anzeigen, keine Detailabschnitte
-                    ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','muellkalender'].forEach(id => {
+                    ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','notfall','muellkalender'].forEach(id => {
                         document.getElementById(id).style.display = 'none';
                     });
                 } else {
