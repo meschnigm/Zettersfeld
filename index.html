@@ -39,18 +39,13 @@
             flex: 1; display: flex; flex-direction: column;
             padding: 20px; overflow-y: auto; margin-left: 0;
         }
-        .progress-container { 
-            position: sticky; top: 0; background: white; padding: 15px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; margin-bottom: 20px;
-            order: 1;
-        }
         .chapter-nav {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             margin-top: 10px;
             margin-bottom: 12px;
-            order: 2;
+            order: 1;
         }
         .chapter-btn {
             padding: 8px 14px;
@@ -74,10 +69,10 @@
         }
         .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #48bb78, #38a169); width: 0%; transition: width 0.3s ease; border-radius: 4px; }
-        .step-container { display: none; order: 3; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .step-container { display: none; order: 2; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         .step-container.active { display: block; animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .nav-buttons { display: flex; order: 4; gap: 15px; justify-content: space-between; align-items: center; margin-top: 30px; }
+        .nav-buttons { display: flex; order: 3; gap: 15px; justify-content: space-between; align-items: center; margin-top: 30px; }
         .step-complete { display: flex; align-items: center; gap: 10px; margin-left: auto; }
         .complete-checkbox { transform: scale(1.6); accent-color: #48bb78; }
         .btn { padding: 12px 24px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 16px; }
@@ -222,7 +217,7 @@
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
                                 <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
                                 <li><a href="#hofladen" onclick="showAllgemeinSection('hofladen')">🧺 Hofladen</a></li>
-                                <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müllkalender</a></li>
+                                <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müll</a></li>
                                 <li><a href="#notfall" onclick="showAllgemeinSection('notfall')">🚨 Notfall</a></li>
                             </ul>
                         </div>
@@ -353,7 +348,11 @@
                     </div>
                     <div id="muellkalender" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
-                        <h3>🗑️ Müllkalender</h3>
+                        <h3>🗑️ Müll</h3>
+                        <div class="tip">
+                            <a class="map-link" target="_blank" rel="noopener" href="https://maps.app.goo.gl/P1p2fLim8B7sbqJW6">Street View: Müllabgabe</a><br>
+                            Parkplatz links und Müllabgabe rechts.
+                        </div>
                         <div class="tip">
                             <strong>Termine in den kommenden 3 Wochen:</strong><br>
                             <div id="nextMuellTermine" class="muell-termine">wird berechnet …</div>
@@ -435,6 +434,10 @@
                         <div class="tip">
                             Der Hofladen liegt direkt auf dem Weg und bietet regionale Produkte wie <strong>Brot, Butter, Milch, Eier und Speck</strong>.
                         </div>
+                        <div class="tip">
+                            <a class="map-link" target="_blank" rel="noopener" href="https://maps.app.goo.gl/rtbaJyGkjqRjHjwn6">Street View: Hofladen</a><br>
+                            Bei Abholung nachts hängt Martina die Sachen an die untere Haustüre, links reingehen wo das untere Auto zu sehen ist. Tagsüber an der oberen Haustür klingeln.
+                        </div>
                         <ul>
                             <li><strong>Kontakt:</strong> Martina Baumgartner</li>
                             <li><strong>Telefon:</strong> <a href="tel:+436606229013">+43 660 6229013</a></li>
@@ -465,7 +468,8 @@
                         <h3>Kontakt vor Ort bei Problemsituationen</h3>
                         <div class="tip">
                             <strong>Martin Baumgartner</strong><br>
-                            <strong>Telefon:</strong> <a href="tel:+436643461632">+43 664 3461632</a>
+                            <strong>Telefon:</strong> <a href="tel:+436643461632">+43 664 3461632</a><br>
+                            Hier ist auch ein Ersatzschlüssel hinterlegt.
                         </div>
 
                         <h3>Notfallausrüstung in der Hütte</h3>
@@ -477,12 +481,6 @@
                         </ul>
                     </div>
                 </div>
-        <!-- PROGRESS BAR -->
-        <div class="progress-container">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-        </div>
         <div class="chapter-nav" id="chapterNav">
             <button class="chapter-btn active" data-step="0">Anreise</button>
             <button class="chapter-btn" data-step="1">Ankunft</button>
@@ -676,7 +674,6 @@
                 this.sections = document.querySelectorAll(
                     '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #ofen, #eheizung, #wasser, #boiler, #abreise, #abreise-strom-boiler, #abreise-wasser-boiler, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-strom-aus, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
                 );
-                this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
@@ -808,12 +805,6 @@
                     });
                 }
 
-                // Fortschrittsbalken nur bei Ankunft und Abreise anzeigen
-                const progressBar = document.querySelector('.progress-bar');
-                if (progressBar) {
-                    progressBar.style.display = (this.currentStep === 1 || this.currentStep === 2) ? 'block' : 'none';
-                }
-
                 // Schritt erledigt Checkbox nur bei Ankunft und Abreise anzeigen
                 const stepCompleteDiv = document.querySelector('.step-complete');
                 if (stepCompleteDiv) {
@@ -838,8 +829,6 @@
             }
 
             updateProgress() {
-                const progress = ((this.currentStep + 1) / 4) * 100;
-                this.progressFill.style.width = progress + '%';
                 this.prevBtn.disabled = this.currentStep === 0;
             }
 
