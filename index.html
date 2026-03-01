@@ -66,6 +66,12 @@
             color: white;
             border-color: #4299e1;
         }
+        .allgemein-links a {
+            display: block;
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 600;
+        }
         .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, #48bb78, #38a169); width: 0%; transition: width 0.3s ease; border-radius: 4px; }
         .step-container { display: none; order: 3; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
@@ -173,7 +179,7 @@
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 10px;
                 position: sticky;
-                top: calc(8px + env(safe-area-inset-top));
+                top: calc(72px + env(safe-area-inset-top));
                 z-index: 250;
                 background: white;
                 padding: 8px;
@@ -207,7 +213,7 @@
                     <div id="allgemein">
                         <h2>🛠️ Allgemein</h2>
                         <div id="menubaum" style="background: #e6fffa; padding: 25px; border-radius: 12px;">
-                            <ul style="font-size:1.2em;">
+                            <ul class="allgemein-links" style="font-size:1.2em;">
                                 <li><a href="#einrichtung" onclick="showAllgemeinSection('einrichtung')">🪑 Einrichtung</a></li>
                                 <li><a href="#wlan" onclick="showAllgemeinSection('wlan')">📶 WLAN</a></li>
                                 <li><a href="#internet" onclick="showAllgemeinSection('internet')">🌐 Internet</a></li>
@@ -608,7 +614,6 @@
 
             init() {
                 // Elements
-                this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
                     '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
@@ -617,17 +622,6 @@
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
-
-                // Tree navigation
-                this.treeItems.forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const step = parseInt(item.dataset.step);
-                        this.currentStep = step;
-                        this.currentSection = item.dataset.section || this.defaultSections[step] || 'anreise';
-                        this.updateView();
-                    });
-                });
 
                 // Hauptkapitel-Leiste
                 this.chapterButtons.forEach(button => {
@@ -699,12 +693,6 @@
             }
 
             updateTree() {
-                this.treeItems.forEach(item => {
-                    const step = parseInt(item.dataset.step);
-                    const section = item.dataset.section;
-                    item.classList.toggle('active', step === this.currentStep && section === this.currentSection);
-                    item.classList.toggle('done', this.stepComplete[`${step}-${section}`]);
-                });
                 this.chapterButtons.forEach(button => {
                     const step = parseInt(button.dataset.step);
                     button.classList.toggle('active', step === this.currentStep);
