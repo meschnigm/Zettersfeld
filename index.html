@@ -100,6 +100,14 @@
             margin: 10px 0 20px 0;
         }
         .diagram-grid img { margin: 0; }
+        .external-table {
+            width: 100%;
+            height: 70vh;
+            min-height: 420px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #fff;
+        }
         .pdf-viewer {
             width: 100%;
             height: 75vh;
@@ -184,6 +192,7 @@
                         <li class="tree-item" data-step="3" data-section="internet">🌐 Internet</li>
                         <li class="tree-item" data-step="3" data-section="musik">🎵 Musik</li>
                         <li class="tree-item" data-step="3" data-section="beleuchtung">💡 Beleuchtung</li>
+                        <li class="tree-item" data-step="3" data-section="skibindung">⛷️ Skibindung einstellen</li>
                         <li class="tree-item" data-step="3" data-section="skischuhtrockner">👢 Skischuhtrockner</li>
                         <li class="tree-item" data-step="3" data-section="muellkalender">🗑️ Müllkalender</li>
                     </ul>
@@ -203,6 +212,7 @@
                                 <li><a href="#internet" onclick="showAllgemeinSection('internet')">🌐 Internet</a></li>
                                 <li><a href="#musik" onclick="showAllgemeinSection('musik')">🎵 Musik</a></li>
                                 <li><a href="#beleuchtung" onclick="showAllgemeinSection('beleuchtung')">💡 Beleuchtung</a></li>
+                                <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
                                 <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müllkalender</a></li>
                             </ul>
@@ -291,6 +301,19 @@
                             <li>In der Hue-App „Bridge hinzufügen“ wählen und die gefundene Bridge auswählen.</li>
                             <li>Zur Kopplung den runden Button auf der Bridge drücken, dann Räume/Lampen in der App übernehmen.</li>
                         </ul>
+                    </div>
+                    <div id="skibindung" style="display:none; margin-top:20px;">
+                        <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
+                        <h3>⛷️ Skibindung einstellen</h3>
+                        <div class="tip">
+                            Der Z-Wert beschreibt, wann die Bindung auslöst. Er hängt u. a. von Körperdaten, Sohlenlänge und Fahrkönnen ab. Für Sicherheit gilt: Bindung möglichst vom Fachpersonal einstellen lassen.
+                        </div>
+                        <p><a class="map-link" target="_blank" rel="noopener" href="https://www.fischersports.com/de_de/blog/skibindung-richtig-einstellen-mit-dem-z-wert-tipps-und-z-wert-tabelle">Originalartikel & Z-Wert-Tabelle öffnen</a></p>
+                        <iframe
+                            class="external-table"
+                            src="https://www.fischersports.com/de_de/blog/skibindung-richtig-einstellen-mit-dem-z-wert-tipps-und-z-wert-tabelle"
+                            title="Fischer Z-Wert-Tabelle zur Skibindung"
+                        ></iframe>
                     </div>
                     <div id="muellkalender" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
@@ -408,7 +431,7 @@
                 // Interaktiver Menübaum für Allgemein
                 function showAllgemeinSection(sectionId) {
                     const menu = document.getElementById('menubaum');
-                    const detailSections = ['wlan','internet','musik','beleuchtung','skischuhtrockner','muellkalender'];
+                    const detailSections = ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','muellkalender'];
                     detailSections.forEach(id => {
                         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
                     });
@@ -430,7 +453,7 @@
                 this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skischuhtrockner, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
@@ -545,14 +568,14 @@
                 } else if (this.currentStep === 3) {
                     // Allgemein: Menübaum und keine anderen Abschnitte
                     this.sections.forEach(section => {
-                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skischuhtrockner","muellkalender"].includes(section.id)) {
+                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","muellkalender"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
                         }
                     });
                     // Nur Menübaum anzeigen, keine Detailabschnitte
-                    ['wlan','internet','musik','beleuchtung','skischuhtrockner','muellkalender'].forEach(id => {
+                    ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','muellkalender'].forEach(id => {
                         document.getElementById(id).style.display = 'none';
                     });
                 } else {
