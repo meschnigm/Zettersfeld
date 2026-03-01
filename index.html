@@ -36,12 +36,8 @@
         .tree-item .children { display: none; }
         .tree-item.expanded .children { display: block; }
         .main-content { 
-            flex: 1; padding: 20px; overflow-y: auto; margin-left: 280px; 
-            transition: margin-left 0.3s ease;
+            flex: 1; padding: 20px; overflow-y: auto; margin-left: 0;
         }
-        .sidebar-collapsed .main-content { margin-left: 60px; }
-        .sidebar-collapsed .sidebar { width: 60px; padding: 10px; }
-        .sidebar-collapsed .tree ul { display: none; }
         .progress-container { 
             position: sticky; top: 0; background: white; padding: 15px; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 100; margin-bottom: 20px;
@@ -153,11 +149,7 @@
         input[type="checkbox"] { transform: scale(1.4); margin-right: 12px; accent-color: #48bb78; }
         .final-checklist { background: #f0fff4; padding: 25px; border-radius: 16px; margin-top: 30px; }
         @media (max-width: 768px) { 
-            body.sidebar-collapsed .main-content { margin-left: 20px; }
-            .sidebar { display: none; }
-            .sidebar.open { display: none; }
             .main-content { margin-left: 0 !important; }
-            .tree-toggle { display: none; }
             .chapter-nav {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -184,52 +176,6 @@
     </style>
 </head>
 <body>
-    <button class="tree-toggle" id="treeToggle">📂</button>
-
-    <!-- LINKSEITIGE BAUMSTRUKTUR -->
-    <nav class="sidebar" id="sidebar">
-        <div class="tree">
-            <ul>
-                <li class="tree-item active done" data-step="0" data-section="anreise">
-                    ✅ Anreise
-                    <ul class="children">
-                        <li class="tree-item" data-step="0" data-section="anreise-adresse">📍 Adresse</li>
-                        <li class="tree-item" data-step="0" data-section="anreise-fussweg">🪨 Fußweg</li>
-                    </ul>
-                </li>
-                <li class="tree-item" data-step="1" data-section="ankunft">
-                    Ankunft
-                    <ul class="children">
-                        <li class="tree-item" data-step="1" data-section="strom">1.1 Strom</li>
-                        <li class="tree-item" data-step="1" data-section="wasser">1.5 Wasser</li>
-                        <li class="tree-item" data-step="1" data-section="boiler">1.6 Boiler</li>
-                    </ul>
-                </li>
-                <li class="tree-item" data-step="2" data-section="abreise">
-                    Abreise
-                    <ul class="children">
-                        <li class="tree-item" data-step="2" data-section="checkliste">📋 Checkliste</li>
-                    </ul>
-                </li>
-                <li class="tree-item" data-step="3" data-section="allgemein">
-                    Allgemein
-                    <ul class="children">
-                        <li class="tree-item" data-step="3" data-section="einrichtung">🪑 Einrichtung</li>
-                        <li class="tree-item" data-step="3" data-section="wlan">📶 WLAN</li>
-                        <li class="tree-item" data-step="3" data-section="internet">🌐 Internet</li>
-                        <li class="tree-item" data-step="3" data-section="beleuchtung">💡 Beleuchtung</li>
-                        <li class="tree-item" data-step="3" data-section="musik">🎵 Musik</li>
-                        <li class="tree-item" data-step="3" data-section="skischuhtrockner">👢 Skischuhtrockner</li>
-                        <li class="tree-item" data-step="3" data-section="skibindung">⛷️ Skibindung einstellen</li>
-                        <li class="tree-item" data-step="3" data-section="hofladen">🧺 Hofladen</li>
-                        <li class="tree-item" data-step="3" data-section="muellkalender">🗑️ Müllkalender</li>
-                        <li class="tree-item" data-step="3" data-section="notfall">🚨 Notfall</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
     <main class="main-content">
                 <!-- STEP 3: ALLGEMEIN -->
                 <div class="step-container" data-step="3">
@@ -378,8 +324,8 @@
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
                         <h3>🗑️ Müllkalender</h3>
                         <div class="tip">
-                            <strong>Nächster Termin:</strong><br>
-                            <span id="nextMuellTermin">wird berechnet …</span>
+                            <strong>Termine in den kommenden 3 Wochen:</strong><br>
+                            <span id="nextMuellTermine">wird berechnet …</span>
                         </div>
                         <div class="tip">
                             Die Mülltüten für die Sammelstelle liegen im <strong>Vorraum</strong> in einer der beiden Schubladen.<br>
@@ -531,8 +477,12 @@
                 <h3>🪨 Fußweg vom Sporthotel</h3>
                 <img src="bilder/Luftaufnahme_Weg.png" alt="Fußweg">
                 <div class="warn">
-                    ⚠️ Die Zufahrt erfolgt über eine Bergstraße.<br>
-                    Von <strong>Oktober bis April</strong> sollten <strong>Schneeketten immer mitgeführt</strong> werden.
+                    ⚠️ Die letzten 10 km führen über eine <strong>mautpflichtige Bergstraße</strong>.<br>
+                    Von <strong>Oktober bis April</strong> sollten <strong>Schneeketten immer mitgeführt</strong> werden.<br><br>
+                    <strong>Mautgebühr:</strong><br>
+                    € 9,00 für Fahrzeuge bis 2,5 Meter Höhe<br>
+                    Wochenkarte: € 25,00<br>
+                    Saisonkarte: € 100,00
                 </div>
                 <div class="tip">
                     💡 Vom Parkplatz zur Hütte sind es 5-7 Minuten zu Fuß.<br>
@@ -541,6 +491,28 @@
                     Bei viel Neuschnee können Gamaschen und Schneeschuhe helfen.<br>
                     <strong>Kommt ihr nachts an, denkt an Stirnlampen!</strong>
                 </div>
+            </div>
+            <div id="anreise-heizung">
+                <h3>🔥 Heizung aus der Ferne einschalten</h3>
+                <div class="tip">
+                    Es gibt <strong>2 Elektroheizkörper der Marke Mill</strong>. Empfehlung: Heizkörper ca. <strong>10 Stunden vor geplanter Ankunft</strong> einschalten.
+                </div>
+                <p>
+                    <a class="map-link" target="_blank" rel="noopener" href="https://millnorway.de/mill-app/">Mill-App Infos / Download</a>
+                </p>
+                <h3>Kurzanleitung (Mill App)</h3>
+                <ul>
+                    <li>Mill-App auf iOS oder Android installieren.</li>
+                    <li>Mit den unten stehenden Zugangsdaten anmelden.</li>
+                    <li>Standort/Haus auswählen und den Status der Heizkörper prüfen (EIN/AUS).</li>
+                    <li>Gewünschte Temperatur setzen oder Heizkörper einschalten.</li>
+                    <li>Heizkörper etwa 10 Stunden vor Ankunft aktivieren.</li>
+                </ul>
+                <h3>Zugang</h3>
+                <ul>
+                    <li><strong>Nutzer:</strong> m.... punkt m...@web.de</li>
+                    <li><strong>Passwort:</strong> t7v!pGjAJ269e9j#</li>
+                </ul>
             </div>
         </div>
 
@@ -626,15 +598,12 @@
                 this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
-                this.treeToggle = document.getElementById('treeToggle');
-                this.sidebar = document.getElementById('sidebar');
-                this.body = document.body;
 
                 // Tree navigation
                 this.treeItems.forEach(item => {
@@ -659,12 +628,6 @@
                 this.nextBtn.addEventListener('click', () => this.nextStep());
                 this.prevBtn.addEventListener('click', () => this.prevStep());
 
-                // Sidebar toggle
-                this.treeToggle.addEventListener('click', () => {
-                    this.body.classList.toggle('sidebar-collapsed');
-                    this.sidebar.classList.toggle('open');
-                });
-
                 this.loadProgress();
                 this.updateView();
             }
@@ -682,13 +645,16 @@
                 this.updateNextMuellTermin();
             }
 
-            getNextMuellTermin() {
+            getMuellTermineNext3Weeks() {
                 const now = new Date();
-                const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const endDate = new Date(startDate);
+                endDate.setDate(endDate.getDate() + 21);
                 const timeSwitchDate = new Date(2026, 3, 8); // 08.04.2026
-                const endOfYear = new Date(2026, 11, 31);
+                const termine = [];
 
-                while (currentDate <= endOfYear) {
+                const currentDate = new Date(startDate);
+                while (currentDate <= endDate) {
                     const day = currentDate.getDay();
                     if (day === 2 || day === 5) {
                         const dateLabel = currentDate.toLocaleDateString('de-AT', {
@@ -698,18 +664,23 @@
                             year: 'numeric'
                         });
                         const timeLabel = currentDate < timeSwitchDate ? '16:00 – 17:00 Uhr' : '16:00 – 16:30 Uhr';
-                        return `${dateLabel}, ${timeLabel}`;
+                        termine.push(`${dateLabel}, ${timeLabel}`);
                     }
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
 
-                return 'Kein weiterer Termin im Kalenderjahr 2026 gefunden.';
+                return termine;
             }
 
             updateNextMuellTermin() {
-                const target = document.getElementById('nextMuellTermin');
+                const target = document.getElementById('nextMuellTermine');
                 if (!target) return;
-                target.textContent = this.getNextMuellTermin();
+                const termine = this.getMuellTermineNext3Weeks();
+                if (!termine.length) {
+                    target.textContent = 'Keine Termine in den kommenden 3 Wochen gefunden.';
+                    return;
+                }
+                target.innerHTML = termine.map(termin => `• ${termin}`).join('<br>');
             }
 
             updateTree() {
@@ -732,7 +703,23 @@
                 // Bei Schritt 0 (Anreise) alle relevanten Abschnitte anzeigen
                 if (this.currentStep === 0) {
                     this.sections.forEach(section => {
-                        if (["anreise", "anreise-adresse", "anreise-fussweg"].includes(section.id)) {
+                        if (["anreise", "anreise-adresse", "anreise-fussweg", "anreise-heizung"].includes(section.id)) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                } else if (this.currentStep === 1) {
+                    this.sections.forEach(section => {
+                        if (["ankunft", "strom", "wasser", "boiler"].includes(section.id)) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                } else if (this.currentStep === 2) {
+                    this.sections.forEach(section => {
+                        if (["abreise", "checkliste"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
