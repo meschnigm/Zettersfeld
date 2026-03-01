@@ -107,11 +107,11 @@
             <ul>
                 <li class="tree-item active done" data-step="0" data-section="anreise">
                     ✅ Anreise
+                    <ul class="children">
+                        <li class="tree-item" data-step="0" data-section="anreise-adresse">📍 Adresse</li>
+                        <li class="tree-item" data-step="0" data-section="anreise-fussweg">🪨 Fußweg</li>
+                    </ul>
                 </li>
-                <ul class="children">
-                    <li class="tree-item" data-step="0" data-section="anreise-adresse">📍 Adresse</li>
-                    <li class="tree-item" data-step="0" data-section="anreise-fussweg">🪨 Fußweg</li>
-                </ul>
                 <li class="tree-item" data-step="1" data-section="ankunft">
                     Ankunft
                     <ul class="children">
@@ -298,6 +298,7 @@
                 // Tree navigation
                 this.treeItems.forEach(item => {
                     item.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         const step = parseInt(item.dataset.step);
                         this.currentStep = step;
                         this.currentSection = item.dataset.section || this.defaultSections[step] || 'anreise';
@@ -385,9 +386,9 @@
                 }
 
                 // Fortschrittsbalken nur bei Ankunft und Abreise anzeigen
-                const progressContainer = document.querySelector('.progress-container');
-                if (progressContainer) {
-                    progressContainer.style.display = (this.currentStep === 1 || this.currentStep === 2) ? 'block' : 'none';
+                const progressBar = document.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.display = (this.currentStep === 1 || this.currentStep === 2) ? 'block' : 'none';
                 }
 
                 // Schritt erledigt Checkbox nur bei Ankunft und Abreise anzeigen
@@ -414,7 +415,7 @@
             }
 
             updateProgress() {
-                const progress = ((this.currentStep + 1) / 3) * 100;
+                const progress = ((this.currentStep + 1) / 4) * 100;
                 this.progressFill.style.width = progress + '%';
                 this.prevBtn.disabled = this.currentStep === 0;
             }
