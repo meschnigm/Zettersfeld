@@ -214,15 +214,16 @@
                 <li class="tree-item" data-step="3" data-section="allgemein">
                     Allgemein
                     <ul class="children">
+                        <li class="tree-item" data-step="3" data-section="einrichtung">🪑 Einrichtung</li>
                         <li class="tree-item" data-step="3" data-section="wlan">📶 WLAN</li>
                         <li class="tree-item" data-step="3" data-section="internet">🌐 Internet</li>
-                        <li class="tree-item" data-step="3" data-section="musik">🎵 Musik</li>
                         <li class="tree-item" data-step="3" data-section="beleuchtung">💡 Beleuchtung</li>
-                        <li class="tree-item" data-step="3" data-section="skibindung">⛷️ Skibindung einstellen</li>
+                        <li class="tree-item" data-step="3" data-section="musik">🎵 Musik</li>
                         <li class="tree-item" data-step="3" data-section="skischuhtrockner">👢 Skischuhtrockner</li>
+                        <li class="tree-item" data-step="3" data-section="skibindung">⛷️ Skibindung einstellen</li>
                         <li class="tree-item" data-step="3" data-section="hofladen">🧺 Hofladen</li>
-                        <li class="tree-item" data-step="3" data-section="notfall">🚨 Notfall</li>
                         <li class="tree-item" data-step="3" data-section="muellkalender">🗑️ Müllkalender</li>
+                        <li class="tree-item" data-step="3" data-section="notfall">🚨 Notfall</li>
                     </ul>
                 </li>
             </ul>
@@ -236,15 +237,16 @@
                         <h2>🛠️ 3. Allgemein</h2>
                         <div id="menubaum" style="background: #e6fffa; padding: 25px; border-radius: 12px;">
                             <ul style="font-size:1.2em;">
+                                <li><a href="#einrichtung" onclick="showAllgemeinSection('einrichtung')">🪑 Einrichtung</a></li>
                                 <li><a href="#wlan" onclick="showAllgemeinSection('wlan')">📶 WLAN</a></li>
                                 <li><a href="#internet" onclick="showAllgemeinSection('internet')">🌐 Internet</a></li>
-                                <li><a href="#musik" onclick="showAllgemeinSection('musik')">🎵 Musik</a></li>
                                 <li><a href="#beleuchtung" onclick="showAllgemeinSection('beleuchtung')">💡 Beleuchtung</a></li>
-                                <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
+                                <li><a href="#musik" onclick="showAllgemeinSection('musik')">🎵 Musik</a></li>
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
+                                <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
                                 <li><a href="#hofladen" onclick="showAllgemeinSection('hofladen')">🧺 Hofladen</a></li>
-                                <li><a href="#notfall" onclick="showAllgemeinSection('notfall')">🚨 Notfall</a></li>
                                 <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müllkalender</a></li>
+                                <li><a href="#notfall" onclick="showAllgemeinSection('notfall')">🚨 Notfall</a></li>
                             </ul>
                         </div>
                     </div>
@@ -394,6 +396,61 @@
                             Hinweis: Die <strong>Zeitschaltuhr befindet sich auf der rechten Geräteseite</strong>.
                         </div>
                         <img src="https://oskari.at/cdn/shop/files/Schalter_und_Uhr.jpg?v=1771948162" alt="Schalter und Zeitschaltuhr auf der rechten Geräteseite">
+                    </div>
+                    <div id="einrichtung" style="display:none; margin-top:20px;">
+                        <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
+                        <h3>🪑 Einrichtung (Startvorschlag)</h3>
+                        <div class="tip">
+                            Diese Liste ist als <strong>logischer Startpunkt</strong> gedacht und kann vor Ort einfach ergänzt werden.
+                        </div>
+
+                        <h3>Wohnen &amp; Schlafen</h3>
+                        <ul>
+                            <li>Sitzmöglichkeiten (Esstisch, Stühle, Bank)</li>
+                            <li>Schlafplätze inkl. Matratzen</li>
+                            <li>Decken und Polster</li>
+                            <li>Stauraum für Kleidung/Gepäck</li>
+                        </ul>
+
+                        <h3>Küche &amp; Essen</h3>
+                        <ul>
+                            <li>Grundausstattung Geschirr (Teller, Schüsseln, Gläser, Tassen)</li>
+                            <li>Besteck und Kochutensilien</li>
+                            <li>Töpfe, Pfannen, Schneidbretter</li>
+                            <li>Kaffeemaschine/Wasserkocher (falls vorhanden)</li>
+                            <li>Abwaschbereich inkl. Schwamm/Spülmittel</li>
+                        </ul>
+
+                        <h3>Sanitär &amp; Reinigung</h3>
+                        <ul>
+                            <li>WC und Handwaschbecken</li>
+                            <li>Toilettenpapier und Handseife</li>
+                            <li>Reinigungsmittel (Allzweck, Bad, Boden)</li>
+                            <li>Besen, Wischer, Müllzubehör</li>
+                        </ul>
+
+                        <h3>Technik &amp; Komfort</h3>
+                        <ul>
+                            <li>WLAN (siehe Abschnitt WLAN)</li>
+                            <li>Beleuchtung/Hue Bridge (siehe Beleuchtung)</li>
+                            <li>Musiksystem Sonos Move (siehe Musik)</li>
+                            <li>Skischuhtrockner (siehe eigener Abschnitt)</li>
+                        </ul>
+
+                        <h3>Außenbereich &amp; Winterbetrieb</h3>
+                        <ul>
+                            <li>Zugang/Schlüsselorganisation</li>
+                            <li>Lagerflächen für Schuhe und nasse Kleidung</li>
+                            <li>Schneeschaufel/Grundausrüstung für Winterzugang</li>
+                            <li>Bereich für Müllzwischenlagerung bis zum Termin</li>
+                        </ul>
+
+                        <h3>Sicherheit</h3>
+                        <ul>
+                            <li>Feuerlöscher und Verbandskasten (siehe Notfall)</li>
+                            <li>Notrufnummern gut sichtbar hinterlegt</li>
+                            <li>Taschenlampen/Stirnlampen für Nachtwege</li>
+                        </ul>
                     </div>
                     <div id="hofladen" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
@@ -545,7 +602,7 @@
                 // Interaktiver Menübaum für Allgemein
                 function showAllgemeinSection(sectionId) {
                     const menu = document.getElementById('menubaum');
-                    const detailSections = ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','notfall','muellkalender'];
+                    const detailSections = ['einrichtung','wlan','internet','beleuchtung','musik','skischuhtrockner','skibindung','hofladen','muellkalender','notfall'];
                     detailSections.forEach(id => {
                         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
                     });
@@ -567,7 +624,7 @@
                 this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #hofladen, #notfall, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
@@ -682,16 +739,19 @@
                 } else if (this.currentStep === 3) {
                     // Allgemein: Menübaum und keine anderen Abschnitte
                     this.sections.forEach(section => {
-                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","hofladen","notfall","muellkalender"].includes(section.id)) {
+                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","einrichtung","hofladen","notfall","muellkalender"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
                         }
                     });
                     // Nur Menübaum anzeigen, keine Detailabschnitte
-                    ['wlan','internet','musik','beleuchtung','skibindung','skischuhtrockner','hofladen','notfall','muellkalender'].forEach(id => {
+                    ['einrichtung','wlan','internet','beleuchtung','musik','skischuhtrockner','skibindung','hofladen','muellkalender','notfall'].forEach(id => {
                         document.getElementById(id).style.display = 'none';
                     });
+                    if (["einrichtung","wlan","internet","beleuchtung","musik","skischuhtrockner","skibindung","hofladen","muellkalender","notfall"].includes(this.currentSection)) {
+                        showAllgemeinSection(this.currentSection);
+                    }
                 } else {
                     this.sections.forEach(section => {
                         section.style.display = section.id === this.currentSection ? 'block' : 'none';
