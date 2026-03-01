@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420">
+  <defs>
+    <style>
+      .title{font:700 28px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#2d3748}
+      .label{font:600 18px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#2d3748}
+      .small{font:500 15px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;fill:#4a5568}
+      .line{stroke:#2b6cb0;stroke-width:3;fill:none}
+    </style>
+  </defs>
+  <rect x="0" y="0" width="900" height="420" fill="#f7fafc"/>
+  <text x="30" y="45" class="title">Sonos Move – Bedienelemente oben (Schema)</text>
+
+  <ellipse cx="450" cy="220" rx="170" ry="110" fill="#2d3748"/>
+  <ellipse cx="450" cy="220" rx="140" ry="85" fill="#1a202c"/>
+
+  <circle cx="450" cy="220" r="16" fill="#e2e8f0"/>
+  <text x="478" y="226" class="small">Play / Pause</text>
+
+  <circle cx="402" cy="220" r="12" fill="#cbd5e0"/>
+  <text x="300" y="225" class="small">Leiser</text>
+
+  <circle cx="498" cy="220" r="12" fill="#cbd5e0"/>
+  <text x="520" y="225" class="small">Lauter</text>
+
+  <circle cx="450" cy="172" r="11" fill="#68d391"/>
+  <text x="478" y="178" class="small">Mikrofon ein/aus</text>
+
+  <path d="M450 236 L450 278" class="line"/>
+  <text x="410" y="304" class="small">Status-LED</text>
+
+  <text x="30" y="360" class="label">Hinweis:</text>
+  <text x="130" y="360" class="small">Darstellung schematisch – Positionen können je nach Generation leicht abweichen.</text>
+</svg>
