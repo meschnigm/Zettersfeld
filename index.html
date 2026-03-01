@@ -215,12 +215,10 @@
                     <div id="muellkalender" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
                         <h3>🗑️ Müllkalender</h3>
-                        <p><a class="map-link" target="_blank" rel="noopener" href="m%C3%BCll/M%C3%BCllkalender%20Recyclinghof%20Zettersfeld%202026%20ab%207.%20April%202026-2.pdf">PDF direkt öffnen</a></p>
-                        <iframe
-                            class="pdf-viewer"
-                            src="m%C3%BCll/M%C3%BCllkalender%20Recyclinghof%20Zettersfeld%202026%20ab%207.%20April%202026-2.pdf"
-                            title="Müllkalender Recyclinghof Zettersfeld 2026"
-                        ></iframe>
+                        <div class="tip">
+                            <strong>Nächster Termin:</strong><br>
+                            <span id="nextMuellTermin">wird berechnet …</span>
+                        </div>
                     </div>
                 </div>
         <!-- PROGRESS BAR -->
@@ -396,6 +394,37 @@
                 this.updateTree();
                 this.updateContent();
                 this.updateProgress();
+                this.updateNextMuellTermin();
+            }
+
+            getNextMuellTermin() {
+                const now = new Date();
+                const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const timeSwitchDate = new Date(2026, 3, 8); // 08.04.2026
+                const endOfYear = new Date(2026, 11, 31);
+
+                while (currentDate <= endOfYear) {
+                    const day = currentDate.getDay();
+                    if (day === 2 || day === 5) {
+                        const dateLabel = currentDate.toLocaleDateString('de-AT', {
+                            weekday: 'long',
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+                        const timeLabel = currentDate < timeSwitchDate ? '16:00 – 17:00 Uhr' : '16:00 – 16:30 Uhr';
+                        return `${dateLabel}, ${timeLabel}`;
+                    }
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                return 'Kein weiterer Termin im Kalenderjahr 2026 gefunden.';
+            }
+
+            updateNextMuellTermin() {
+                const target = document.getElementById('nextMuellTermin');
+                if (!target) return;
+                target.textContent = this.getNextMuellTermin();
             }
 
             updateTree() {
