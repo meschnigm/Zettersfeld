@@ -183,6 +183,7 @@
                         <li class="tree-item" data-step="3" data-section="wlan">📶 WLAN</li>
                         <li class="tree-item" data-step="3" data-section="internet">🌐 Internet</li>
                         <li class="tree-item" data-step="3" data-section="musik">🎵 Musik</li>
+                        <li class="tree-item" data-step="3" data-section="beleuchtung">💡 Beleuchtung</li>
                         <li class="tree-item" data-step="3" data-section="skischuhtrockner">👢 Skischuhtrockner</li>
                         <li class="tree-item" data-step="3" data-section="muellkalender">🗑️ Müllkalender</li>
                     </ul>
@@ -201,6 +202,7 @@
                                 <li><a href="#wlan" onclick="showAllgemeinSection('wlan')">📶 WLAN</a></li>
                                 <li><a href="#internet" onclick="showAllgemeinSection('internet')">🌐 Internet</a></li>
                                 <li><a href="#musik" onclick="showAllgemeinSection('musik')">🎵 Musik</a></li>
+                                <li><a href="#beleuchtung" onclick="showAllgemeinSection('beleuchtung')">💡 Beleuchtung</a></li>
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
                                 <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müllkalender</a></li>
                             </ul>
@@ -275,6 +277,19 @@
                             <li><strong>Oben:</strong> Lauter/Leiser, Play/Pause, Mikrofon-Taste.</li>
                             <li><strong>Rückseite:</strong> Ein/Aus-Taste, Modus-Taste für WLAN/Bluetooth, Statusanzeige.</li>
                             <li><strong>Laden:</strong> über Ladebasis oder kompatibles USB‑C-Ladegerät.</li>
+                        </ul>
+                    </div>
+                    <div id="beleuchtung" style="display:none; margin-top:20px;">
+                        <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
+                        <h3>💡 Beleuchtung (Philips Hue)</h3>
+                        <img src="bilder/hue-bridge-weiss.svg" alt="Weiße Hue Bridge hinter dem Fernseher">
+                        <p><a class="map-link" target="_blank" rel="noopener" href="https://www.philips-hue.com/de-de/explore-hue/apps">Hue-App herunterladen</a></p>
+                        <ul>
+                            <li>Hue-App auf dem Smartphone installieren und öffnen.</li>
+                            <li>Smartphone mit dem gleichen WLAN wie die Hütte verbinden.</li>
+                            <li>Hue Bridge <strong>hinter dem Fernseher</strong> einschalten.</li>
+                            <li>In der Hue-App „Bridge hinzufügen“ wählen und die gefundene Bridge auswählen.</li>
+                            <li>Zur Kopplung den runden Button auf der Bridge drücken, dann Räume/Lampen in der App übernehmen.</li>
                         </ul>
                     </div>
                     <div id="muellkalender" style="display:none; margin-top:20px;">
@@ -393,7 +408,7 @@
                 // Interaktiver Menübaum für Allgemein
                 function showAllgemeinSection(sectionId) {
                     const menu = document.getElementById('menubaum');
-                    const detailSections = ['wlan','internet','musik','skischuhtrockner','muellkalender'];
+                    const detailSections = ['wlan','internet','musik','beleuchtung','skischuhtrockner','muellkalender'];
                     detailSections.forEach(id => {
                         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
                     });
@@ -415,7 +430,7 @@
                 this.treeItems = document.querySelectorAll('.tree-item');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #skischuhtrockner, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skischuhtrockner, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
@@ -530,14 +545,14 @@
                 } else if (this.currentStep === 3) {
                     // Allgemein: Menübaum und keine anderen Abschnitte
                     this.sections.forEach(section => {
-                        if (["allgemein","menubaum","wlan","internet","musik","skischuhtrockner","muellkalender"].includes(section.id)) {
+                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skischuhtrockner","muellkalender"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
                         }
                     });
                     // Nur Menübaum anzeigen, keine Detailabschnitte
-                    ['wlan','internet','musik','skischuhtrockner','muellkalender'].forEach(id => {
+                    ['wlan','internet','musik','beleuchtung','skischuhtrockner','muellkalender'].forEach(id => {
                         document.getElementById(id).style.display = 'none';
                     });
                 } else {
