@@ -539,13 +539,32 @@
         <div class="step-container" data-step="1">
             <div id="ankunft">
                 <h2>Ankunft</h2>
+                <ul>
+                    <li>1) Strom einschalten (Boiler bleibt aus!)</li>
+                    <li>2) Ofen in Betrieb nehmen</li>
+                    <li>3) E-Heizung abbauen</li>
+                    <li>4) Wasser aufdrehen</li>
+                    <li>5) Boiler in Betrieb nehmen</li>
+                </ul>
             </div>
             <div id="strom">
-                <h3>Strom einschalten</h3>
+                <h3>Strom einschalten (Boiler bleibt aus!)</h3>
                 <img src="bilder/Sicherungskasten 2012_2.jpg" alt="Sicherungskasten">
                 <ul>
                     <li>Sicherungskasten außen. Schlüssel am Esstisch.</li>
                     <li class="warn">🔴 <strong>Boiler-Sicherungen AUS</strong> lassen bis Wasser gefüllt!</li>
+                </ul>
+            </div>
+            <div id="ofen">
+                <h3>Ofen in Betrieb nehmen</h3>
+                <ul>
+                    <li>Ofen gemäß vorhandener Anleitung in Betrieb nehmen.</li>
+                </ul>
+            </div>
+            <div id="eheizung">
+                <h3>E-Heizung abbauen</h3>
+                <ul>
+                    <li>Vorhandene E-Heizung abbauen bzw. wegstellen.</li>
                 </ul>
             </div>
             <div id="wasser">
@@ -557,7 +576,7 @@
                 </ul>
             </div>
             <div id="boiler">
-                <h3>Boiler starten</h3>
+                <h3>Boiler in Betrieb nehmen</h3>
                 <img src="bilder/Boiler Kugelhahn.tif" alt="Boiler Kugelhahn">
                 <ul><li>Boiler-Sicherungen einschalten → ECO → Startknopf.</li></ul>
             </div>
@@ -567,17 +586,56 @@
         <div class="step-container" data-step="2">
             <div id="abreise">
                 <h2>Abreise</h2>
+                <ul>
+                    <li>1) Strom Boiler ausschalten</li>
+                    <li>2) Wasser abdrehen und Boiler entleeren</li>
+                    <li>3) Ofen vorbereiten</li>
+                    <li>4) Endreinigung</li>
+                    <li>5) Fensterläden schließen</li>
+                    <li>6) E-Heizung aufstellen</li>
+                    <li>7) Kaffeemaschine frostsicher machen</li>
+                    <li>8) Frostschutz WC und Waschbecken einfüllen</li>
+                    <li>9) Strom abschalten</li>
+                    <li>10) Abschließen</li>
+                    <li>11) Betriebskosten</li>
+                    <li>12) Vorräte und Hinweise</li>
+                </ul>
             </div>
-            <div id="checkliste" class="final-checklist">
-                <h3>📋 Finale Checkliste</h3>
-                <form>
-                    <ul class="checklist">
-                        <li><input type="checkbox"> Strom Boiler ausschalten</li>
-                        <li><input type="checkbox"> Wasser abdrehen + entleeren</li>
-                        <li><input type="checkbox"> Frostschutz einfüllen</li>
-                        <li><input type="checkbox"> Abschließen</li>
-                    </ul>
-                </form>
+            <div id="abreise-strom-boiler" class="final-checklist">
+                <h3>Strom Boiler ausschalten</h3>
+            </div>
+            <div id="abreise-wasser-boiler" class="final-checklist">
+                <h3>Wasser abdrehen und Boiler entleeren</h3>
+            </div>
+            <div id="abreise-ofen" class="final-checklist">
+                <h3>Ofen vorbereiten</h3>
+            </div>
+            <div id="abreise-endreinigung" class="final-checklist">
+                <h3>Endreinigung</h3>
+            </div>
+            <div id="abreise-fensterlaeden" class="final-checklist">
+                <h3>Fensterläden schließen</h3>
+            </div>
+            <div id="abreise-eheizung" class="final-checklist">
+                <h3>E-Heizung aufstellen</h3>
+            </div>
+            <div id="abreise-kaffeemaschine" class="final-checklist">
+                <h3>Kaffeemaschine frostsicher machen</h3>
+            </div>
+            <div id="abreise-frostschutz" class="final-checklist">
+                <h3>Frostschutz WC und Waschbecken einfüllen</h3>
+            </div>
+            <div id="abreise-strom-aus" class="final-checklist">
+                <h3>Strom abschalten</h3>
+            </div>
+            <div id="abreise-abschliessen" class="final-checklist">
+                <h3>Abschließen</h3>
+            </div>
+            <div id="abreise-betriebskosten" class="final-checklist">
+                <h3>Betriebskosten</h3>
+            </div>
+            <div id="abreise-vorraete" class="final-checklist">
+                <h3>Vorräte und Hinweise</h3>
             </div>
         </div>
 
@@ -616,7 +674,7 @@
                 // Elements
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #boiler, #abreise, #checkliste, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #ofen, #eheizung, #wasser, #boiler, #abreise, #abreise-strom-boiler, #abreise-wasser-boiler, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-strom-aus, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
                 );
                 this.progressFill = document.getElementById('progressFill');
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
@@ -714,7 +772,7 @@
                     });
                 } else if (this.currentStep === 1) {
                     this.sections.forEach(section => {
-                        if (["ankunft", "strom", "wasser", "boiler"].includes(section.id)) {
+                        if (["ankunft", "strom", "ofen", "eheizung", "wasser", "boiler"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
@@ -722,7 +780,7 @@
                     });
                 } else if (this.currentStep === 2) {
                     this.sections.forEach(section => {
-                        if (["abreise", "checkliste"].includes(section.id)) {
+                        if (["abreise", "abreise-strom-boiler", "abreise-wasser-boiler", "abreise-ofen", "abreise-endreinigung", "abreise-fensterlaeden", "abreise-eheizung", "abreise-kaffeemaschine", "abreise-frostschutz", "abreise-strom-aus", "abreise-abschliessen", "abreise-betriebskosten", "abreise-vorraete"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
