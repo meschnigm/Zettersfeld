@@ -81,6 +81,18 @@
         .btn-secondary { background: #e2e8f0; color: #4a5568; }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .section-back { margin-bottom: 15px; }
+        .qr-box {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .qr-box img {
+            width: 220px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: none;
+        }
         .pdf-viewer {
             width: 100%;
             height: 75vh;
@@ -188,19 +200,19 @@
                     <div id="wlan" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
                         <h3>📶 WLAN</h3>
-                        <div class="tip">
-                            <strong>Verbindungsdaten (aus FRITZ!Box 6890 LTE PDF)</strong><br>
-                            Router: <a href="http://192.168.178.1" target="_blank" rel="noopener">http://192.168.178.1</a>
+                        <p><strong>SSID:</strong> FRITZ!Box 6890 TS</p>
+                        <p><strong>Schlüssel:</strong> 2912 1972 0904 1977</p>
+                        <p><strong>Router:</strong> <a href="http://192.168.178.1" target="_blank" rel="noopener">192.168.178.1</a></p>
+                        <div class="qr-box">
+                            <img
+                                src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=WIFI%3AT%3AWPA%3BS%3AFRITZ%21Box%206890%20TS%3BP%3A2912%201972%200904%201977%3B%3B"
+                                alt="QR-Code für WLAN FRITZ!Box 6890 TS"
+                            >
                         </div>
                         <ul>
-                            <li><strong>Funknetz-Name (SSID):</strong> FRITZ!Box 6890 TS</li>
-                            <li><strong>WLAN-Netzwerkschlüssel:</strong> 2912 1972 0904 1977</li>
-                            <li><strong>WLAN-Standard:</strong> Wi‑Fi 4 (2,4 GHz) und Wi‑Fi 5 (5 GHz)</li>
-                            <li><strong>Verschlüsselungsart:</strong> WPA2 (CCMP)</li>
+                            <li>Auf dem Smartphone Kamera öffnen und den QR-Code scannen.</li>
+                            <li>Falls der Scan nicht funktioniert, SSID und Schlüssel manuell eingeben.</li>
                         </ul>
-                        <div class="tip">
-                            Verbindung kann auch über FRITZ!App WLAN oder den QR-Code der FRITZ!Box hergestellt werden.
-                        </div>
                     </div>
                     <div id="internet" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
