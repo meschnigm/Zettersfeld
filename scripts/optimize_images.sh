@@ -26,7 +26,7 @@ slugify() {
   echo "$name"
 }
 
-mapfile -d '' files < <(find "$INPUT_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.tif" -o -iname "*.tiff" \) ! -path "$OUTPUT_DIR/*" -print0)
+mapfile -d '' files < <(find "$INPUT_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.tif" -o -iname "*.tiff" -o -iname "*.heic" -o -iname "*.heif" \) ! -path "$OUTPUT_DIR/*" -print0)
 
 for input in "${files[@]}"; do
   rel="${input#$INPUT_DIR/}"
