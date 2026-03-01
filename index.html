@@ -108,6 +108,32 @@
             border-radius: 12px;
             background: #fff;
         }
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+        }
+        .z-table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .z-table th,
+        .z-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .z-table th {
+            background: #f7fafc;
+            font-weight: 700;
+            color: #2d3748;
+        }
         .pdf-viewer {
             width: 100%;
             height: 75vh;
@@ -309,11 +335,39 @@
                             Der Z-Wert beschreibt, wann die Bindung auslöst. Er hängt u. a. von Körperdaten, Sohlenlänge und Fahrkönnen ab. Für Sicherheit gilt: Bindung möglichst vom Fachpersonal einstellen lassen.
                         </div>
                         <p><a class="map-link" target="_blank" rel="noopener" href="https://www.fischersports.com/de_de/blog/skibindung-richtig-einstellen-mit-dem-z-wert-tipps-und-z-wert-tabelle">Originalartikel & Z-Wert-Tabelle öffnen</a></p>
-                        <iframe
-                            class="external-table"
-                            src="https://www.fischersports.com/de_de/blog/skibindung-richtig-einstellen-mit-dem-z-wert-tipps-und-z-wert-tabelle"
-                            title="Fischer Z-Wert-Tabelle zur Skibindung"
-                        ></iframe>
+                        <div class="table-wrap">
+                            <table class="z-table" aria-label="Z-Wert-Tabelle nach ISO 11088 (Quelle: Fischer)">
+                                <thead>
+                                    <tr>
+                                        <th>Gewicht / Größe</th>
+                                        <th>bis 250</th>
+                                        <th>251–270</th>
+                                        <th>271–290</th>
+                                        <th>291–310</th>
+                                        <th>311–330</th>
+                                        <th>über 330</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>10–13</td><td>0,75</td><td>0,75</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+                                    <tr><td>14–17</td><td>1,00</td><td>1,00</td><td>0,75</td><td>–</td><td>–</td><td>–</td></tr>
+                                    <tr><td>18–21</td><td>1,50</td><td>1,25</td><td>1,00</td><td>–</td><td>–</td><td>–</td></tr>
+                                    <tr><td>22–25</td><td>1,75</td><td>1,50</td><td>1,50</td><td>1,25</td><td>–</td><td>–</td></tr>
+                                    <tr><td>26–30</td><td>2,25</td><td>2,00</td><td>1,75</td><td>1,50</td><td>1,50</td><td>–</td></tr>
+                                    <tr><td>31–35</td><td>2,75</td><td>2,50</td><td>2,25</td><td>2,00</td><td>1,75</td><td>1,75</td></tr>
+                                    <tr><td>36–41</td><td>3,50</td><td>3,00</td><td>2,75</td><td>2,50</td><td>2,25</td><td>2,00</td></tr>
+                                    <tr><td>42–48 / &lt;148 cm</td><td>–</td><td>3,50</td><td>3,00</td><td>3,00</td><td>2,75</td><td>2,50</td></tr>
+                                    <tr><td>49–57 / 149–157 cm</td><td>–</td><td>4,50</td><td>4,00</td><td>3,50</td><td>3,50</td><td>3,00</td></tr>
+                                    <tr><td>58–66 / 158–166 cm</td><td>–</td><td>5,50</td><td>5,00</td><td>4,50</td><td>4,00</td><td>3,50</td></tr>
+                                    <tr><td>67–78 / 167–178 cm</td><td>–</td><td>6,50</td><td>6,00</td><td>5,50</td><td>5,00</td><td>4,50</td></tr>
+                                    <tr><td>79–94 / 179–194 cm</td><td>–</td><td>7,50</td><td>7,00</td><td>6,50</td><td>6,00</td><td>5,50</td></tr>
+                                    <tr><td>ab 95 / &gt;195 cm</td><td>–</td><td>–</td><td>8,50</td><td>8,00</td><td>7,00</td><td>6,50</td></tr>
+                                    <tr><td>Erweiterung</td><td>–</td><td>–</td><td>10,00</td><td>9,50</td><td>8,50</td><td>8,00</td></tr>
+                                    <tr><td>Erweiterung</td><td>–</td><td>–</td><td>11,00</td><td>11,00</td><td>10,00</td><td>9,50</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tip">Für vollständige Details und Erklärungen bitte den Originalartikel öffnen.</div>
                     </div>
                     <div id="muellkalender" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
