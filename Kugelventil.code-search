@@ -1,0 +1,9 @@
+# Query: Kugelventil
+# ContextLines: 1
+
+1 Ergebnis - 1 Datei
+
+index.html:
+  657                  <img class="step-image" src="bilder/optimized/Boiler_Entleerung_zu.webp" loading="lazy" decoding="async" alt="Boiler Entleerung geschlossen">
+  658:                 <div class="warn">🔴 <strong>Das Kugelventil am Boiler sollte bereits geschlossen und die Kappe aufgeschraubt sein.</strong></div>
+  659              </div>
