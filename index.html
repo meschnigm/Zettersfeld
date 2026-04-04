@@ -649,29 +649,34 @@
                 <img class="step-image" src="bilder/optimized/Sicherungskasten_Ankunft.webp" loading="lazy" decoding="async" alt="Sicherungskasten mit Schlüssel und markierter Boiler-Sicherung für den Schritt Ankunft">
                 <div class="warn">🔴 <strong>Vergewissere dich, dass die Boiler-Sicherung, wie auf dem Bild zu sehen, ausgeschaltet ist.</strong></div>
             </div>
-            <div id="ofen">
-                <h3>Ofen in Betrieb nehmen</h3>
-                <ul>
-                    <li>Ofen gemäß vorhandener Anleitung in Betrieb nehmen.</li>
-                </ul>
-            </div>
-            <div id="eheizung">
-                <h3>E-Heizung abbauen</h3>
-                <ul>
-                    <li>Vorhandene E-Heizung abbauen bzw. wegstellen.</li>
-                </ul>
-            </div>
             <div id="wasser">
-                <h3>Wasser-Auslassstellen schließen</h3>
+                <h3>2) Wasser-Auslassstellen schließen</h3>
                 <ul>
                     <li>Wasserhäne in Küche, Bad und Dusche schließen. In der Dusche den Schlauch mitsamt der Dichtung montieren. Den Keil aus dem Spühlkasten im WC abziehen. Das Kugelventil am Boiler sollte bereits geschlossen sein und die Kappe verschlossen sein.</li>
                 </ul>
                 <img class="step-image" src="bilder/optimized/Boiler_Entleerung_zu.webp" loading="lazy" decoding="async" alt="Boiler Entleerung geschlossen">
             </div>
+            <div id="wasser-aufdrehen">
+                <h3>3) Wasser aufdrehen</h3>
+                <img class="step-image" src="bilder/optimized/Keller_collage.webp" loading="lazy" decoding="async" alt="Keller Collage für Wasser aufdrehen">
+                <ul><li>Kugelhahn am Boiler öffnen.</li></ul>
+            </div>
             <div id="boiler">
-                <h3>Boiler in Betrieb nehmen</h3>
+                <h3>4) Boiler in Betrieb nehmen</h3>
                 <img class="step-image" src="bilder/optimized/boiler-kugelhahn-800.webp" srcset="bilder/optimized/boiler-kugelhahn-800.webp 800w, bilder/optimized/boiler-kugelhahn-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Boiler Kugelhahn">
                 <ul><li>Boiler-Sicherungen einschalten → ECO → Startknopf.</li></ul>
+            </div>
+            <div id="ofen">
+                <h3>5) Ofen in Betrieb nehmen</h3>
+                <ul>
+                    <li>Ofen gemäß vorhandener Anleitung in Betrieb nehmen.</li>
+                </ul>
+            </div>
+            <div id="eheizung">
+                <h3>6) E-Heizung abbauen</h3>
+                <ul>
+                    <li>Vorhandene E-Heizung abbauen bzw. wegstellen.</li>
+                </ul>
             </div>
         </div>
 
@@ -780,7 +785,7 @@
                 this.currentSection = 'anreise';
                 this.stepComplete = {};
                 this.defaultSections = ['anreise', 'ankunft', 'abreise', 'allgemein'];
-                this.ankunftSections = ['strom', 'wasser', 'boiler', 'ofen', 'eheizung'];
+                this.ankunftSections = ['strom', 'wasser', 'wasser-aufdrehen', 'boiler', 'ofen', 'eheizung'];
                 this.abreiseSections = ['abreise-strom-boiler', 'abreise-wasser-boiler', 'abreise-ofen', 'abreise-endreinigung', 'abreise-fensterlaeden', 'abreise-eheizung', 'abreise-kaffeemaschine', 'abreise-frostschutz', 'abreise-strom-aus', 'abreise-abschliessen', 'abreise-betriebskosten', 'abreise-vorraete'];
                 this.init();
             }
@@ -790,7 +795,7 @@
                 this.mainContent = document.querySelector('.main-content');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #ofen, #eheizung, #wasser, #boiler, #abreise, #abreise-strom-boiler, #abreise-wasser-boiler, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-strom-aus, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #wasser-aufdrehen, #boiler, #ofen, #eheizung, #abreise, #abreise-strom-boiler, #abreise-wasser-boiler, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-strom-aus, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #notfall, #muellkalender'
                 );
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
@@ -975,6 +980,26 @@
             }
 
             prevStep() {
+                if (this.currentStep === 1) {
+                    const currentIndex = this.ankunftSections.indexOf(this.currentSection);
+                    if (currentIndex > 0) {
+                        this.currentSection = this.ankunftSections[currentIndex - 1];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+                }
+
+                if (this.currentStep === 2) {
+                    const currentIndex = this.abreiseSections.indexOf(this.currentSection);
+                    if (currentIndex > 0) {
+                        this.currentSection = this.abreiseSections[currentIndex - 1];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+                }
+
                 if (this.currentStep > 0) {
                     this.currentStep--;
                     this.currentSection = this.defaultSections[this.currentStep] || 'anreise';
@@ -996,20 +1021,27 @@
                 if (!this.prevBtn || !this.nextBtn) return;
 
                 if (this.currentStep === 1) {
+                    const isFirstAnkunftSection = this.currentSection === this.ankunftSections[0];
                     const isLastAnkunftSection = this.currentSection === this.ankunftSections[this.ankunftSections.length - 1];
-                    this.prevBtn.style.display = 'none';
+                    this.prevBtn.style.display = '';
+                    this.prevBtn.disabled = false;
+                    this.prevBtn.textContent = isFirstAnkunftSection ? '← Zurück' : '← Vorheriger Schritt';
                     this.nextBtn.textContent = isLastAnkunftSection ? 'Nächstes Kapitel →' : 'Nächster Schritt →';
                     return;
                 }
 
                 if (this.currentStep === 2) {
+                    const isFirstAbreiseSection = this.currentSection === this.abreiseSections[0];
                     const isLastAbreiseSection = this.currentSection === this.abreiseSections[this.abreiseSections.length - 1];
-                    this.prevBtn.style.display = 'none';
+                    this.prevBtn.style.display = '';
+                    this.prevBtn.disabled = false;
+                    this.prevBtn.textContent = isFirstAbreiseSection ? '← Zurück' : '← Vorheriger Schritt';
                     this.nextBtn.textContent = isLastAbreiseSection ? 'Nächstes Kapitel →' : 'Nächster Schritt →';
                     return;
                 }
 
                 this.prevBtn.style.display = '';
+                this.prevBtn.textContent = '← Zurück';
                 this.nextBtn.textContent = 'Nächstes Kapitel →';
             }
 
