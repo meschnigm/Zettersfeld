@@ -641,7 +641,7 @@
             <div id="ankunft">
                 <h2>Ankunft</h2>
                 <ul>
-                    <li>1) Strom einschalten (Boiler bleibt aus!)</li>
+                    <li>1) Sicherstellen dass Boiler-Sicherung aus ist.</li>
                     <li>2) Ofen in Betrieb nehmen</li>
                     <li>3) E-Heizung abbauen</li>
                     <li>4) Wasser aufdrehen</li>
@@ -649,11 +649,12 @@
                 </ul>
             </div>
             <div id="strom">
-                <h3>Strom einschalten (Boiler bleibt aus!)</h3>
-                <img class="step-image" src="bilder/optimized/sicherungskasten-2012-2-800.webp" srcset="bilder/optimized/sicherungskasten-2012-2-800.webp 800w, bilder/optimized/sicherungskasten-2012-2-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Sicherungskasten">
+                <h3>Strom einschalten und Boiler-Sicherung prüfen</h3>
+                <img class="step-image" src="bilder/optimized/Sicherungskasten_Ankunft.webp" loading="lazy" decoding="async" alt="Sicherungskasten mit Schlüssel und markierter Boiler-Sicherung für den Schritt Ankunft">
                 <ul>
                     <li>Sicherungskasten außen. Schlüssel am Esstisch.</li>
-                    <li class="warn">🔴 <strong>Boiler-Sicherungen AUS</strong> lassen bis Wasser gefüllt!</li>
+                    <li class="warn">🔴 <strong>Vergewissere dich, dass die Boiler-Sicherung ausgeschaltet ist.</strong></li>
+                    <li>Erst wenn Wasser eingelassen wurde, darf die Boiler-Sicherung später wieder eingeschaltet werden.</li>
                 </ul>
             </div>
             <div id="ofen">
@@ -730,14 +731,9 @@
             <div id="abreise-fensterlaeden" class="final-checklist">
                 <h3>Fensterläden schließen</h3>
             </div>
-            <div id="abreise-eheizung" class="final-checklist split-checklist">
-                <div class="split-text">
-                    <h3>E-Heizung aufstellen</h3>
-                    <p>Stellt die E-Heizung an den vorgesehenen Platz zurück und setzt sie auf die gewünschte Grundeinstellung.</p>
-                </div>
-                <div class="split-media">
-                    <img class="step-image" src="bilder/optimized/e-heizkoerper-einstellung-800.webp" srcset="bilder/optimized/e-heizkoerper-einstellung-800.webp 800w, bilder/optimized/e-heizkoerper-einstellung-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="E-Heizkörper Einstellung">
-                </div>
+            <div id="abreise-eheizung" class="final-checklist">
+                <h3>E-Heizung aufstellen</h3>
+                <p>Stellt die E-Heizung an den vorgesehenen Platz zurück und setzt sie auf die gewünschte Grundeinstellung.</p>
             </div>
             <div id="abreise-kaffeemaschine" class="final-checklist">
                 <h3>Kaffeemaschine frostsicher machen</h3>
@@ -793,6 +789,8 @@
                 this.currentSection = 'anreise';
                 this.stepComplete = {};
                 this.defaultSections = ['anreise', 'ankunft', 'abreise', 'allgemein'];
+                this.ankunftSections = ['strom', 'ofen', 'eheizung', 'wasser', 'boiler'];
+                this.abreiseSections = ['abreise-strom-boiler', 'abreise-wasser-boiler', 'abreise-ofen', 'abreise-endreinigung', 'abreise-fensterlaeden', 'abreise-eheizung', 'abreise-kaffeemaschine', 'abreise-frostschutz', 'abreise-strom-aus', 'abreise-abschliessen', 'abreise-betriebskosten', 'abreise-vorraete'];
                 this.init();
             }
 
@@ -825,7 +823,13 @@
 
             goToStep(step) {
                 this.currentStep = step;
-                this.currentSection = this.defaultSections[step] || 'anreise';
+                if (step === 1) {
+                    this.currentSection = this.ankunftSections[0];
+                } else if (step === 2) {
+                    this.currentSection = this.abreiseSections[0];
+                } else {
+                    this.currentSection = this.defaultSections[step] || 'anreise';
+                }
                 this.updateView();
                 this.scrollToTop();
             }
@@ -899,7 +903,7 @@
                     });
                 } else if (this.currentStep === 1) {
                     this.sections.forEach(section => {
-                        if (["ankunft", "strom", "ofen", "eheizung", "wasser", "boiler"].includes(section.id)) {
+                        if (section.id === 'ankunft' || section.id === this.currentSection) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
@@ -907,7 +911,7 @@
                     });
                 } else if (this.currentStep === 2) {
                     this.sections.forEach(section => {
-                        if (["abreise", "abreise-strom-boiler", "abreise-wasser-boiler", "abreise-ofen", "abreise-endreinigung", "abreise-fensterlaeden", "abreise-eheizung", "abreise-kaffeemaschine", "abreise-frostschutz", "abreise-strom-aus", "abreise-abschliessen", "abreise-betriebskosten", "abreise-vorraete"].includes(section.id)) {
+                        if (section.id === 'abreise' || section.id === this.currentSection) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
@@ -940,12 +944,40 @@
                 if (stepCompleteDiv) {
                     stepCompleteDiv.style.display = (this.currentStep === 1 || this.currentStep === 2) ? 'flex' : 'none';
                 }
+
+                this.updateNavigationControls();
             }
 
             nextStep() {
+                if (this.currentStep === 1) {
+                    const currentIndex = this.ankunftSections.indexOf(this.currentSection);
+                    if (currentIndex >= 0 && currentIndex < this.ankunftSections.length - 1) {
+                        this.currentSection = this.ankunftSections[currentIndex + 1];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+                }
+
+                if (this.currentStep === 2) {
+                    const currentIndex = this.abreiseSections.indexOf(this.currentSection);
+                    if (currentIndex >= 0 && currentIndex < this.abreiseSections.length - 1) {
+                        this.currentSection = this.abreiseSections[currentIndex + 1];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+                }
+
                 if (this.currentStep < 3) {
                     this.currentStep++;
-                    this.currentSection = this.defaultSections[this.currentStep] || 'anreise';
+                    if (this.currentStep === 1) {
+                        this.currentSection = this.ankunftSections[0];
+                    } else if (this.currentStep === 2) {
+                        this.currentSection = this.abreiseSections[0];
+                    } else {
+                        this.currentSection = this.defaultSections[this.currentStep] || 'anreise';
+                    }
                     this.updateView();
                     this.scrollToTop();
                 }
@@ -967,6 +999,27 @@
 
             updateProgress() {
                 this.prevBtn.disabled = this.currentStep === 0;
+            }
+
+            updateNavigationControls() {
+                if (!this.prevBtn || !this.nextBtn) return;
+
+                if (this.currentStep === 1) {
+                    const isLastAnkunftSection = this.currentSection === this.ankunftSections[this.ankunftSections.length - 1];
+                    this.prevBtn.style.display = 'none';
+                    this.nextBtn.textContent = isLastAnkunftSection ? 'Nächstes Kapitel →' : 'Nächster Schritt →';
+                    return;
+                }
+
+                if (this.currentStep === 2) {
+                    const isLastAbreiseSection = this.currentSection === this.abreiseSections[this.abreiseSections.length - 1];
+                    this.prevBtn.style.display = 'none';
+                    this.nextBtn.textContent = isLastAbreiseSection ? 'Nächstes Kapitel →' : 'Nächster Schritt →';
+                    return;
+                }
+
+                this.prevBtn.style.display = '';
+                this.nextBtn.textContent = 'Nächstes Kapitel →';
             }
 
             saveProgress() {
