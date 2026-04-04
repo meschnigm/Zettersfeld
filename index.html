@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4299e1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Hütte Lienz">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
     <title>🏔️ Hütte Lienz - Schritt-für-Schritt</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -617,6 +625,7 @@
                 </p>
             </div>
             <div id="anreise-fussweg">
+                <img class="step-image" src="bilder/optimized/Hütte_Winter.webp" loading="lazy" decoding="async" alt="Hütte im Winter">
                 <h3>🪨 Fußweg vom Sporthotel</h3>
                 <img class="step-image" src="bilder/optimized/luftaufnahme-weg-800.webp" srcset="bilder/optimized/luftaufnahme-weg-800.webp 800w, bilder/optimized/luftaufnahme-weg-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 820px" loading="lazy" decoding="async" alt="Fußweg">
                 <div class="warn">
@@ -858,6 +867,7 @@
                 }
 
                 this.loadProgress();
+                this.resetSequenceProgress();
                 this.updateView();
             }
 
@@ -886,6 +896,12 @@
                 if (this.currentStep === 1) return this.ankunftSections;
                 if (this.currentStep === 2) return this.abreiseSections;
                 return [];
+            }
+
+            resetSequenceProgress() {
+                [...this.ankunftSections, ...this.abreiseSections].forEach(sectionId => {
+                    this.stepComplete[sectionId] = false;
+                });
             }
 
             findFirstIncompleteSection(sections) {
@@ -1053,6 +1069,19 @@
                         this.scrollToTop();
                         return;
                     }
+
+                    if (this.areAllSectionsComplete(this.ankunftSections)) {
+                        this.currentStep = 2;
+                        this.currentSection = this.abreiseSections[0];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+
+                    this.currentSection = this.ankunftSections[0];
+                    this.updateView();
+                    this.scrollToTop();
+                    return;
                 }
 
                 if (this.currentStep === 2) {
@@ -1071,6 +1100,19 @@
                         this.scrollToTop();
                         return;
                     }
+
+                    if (this.areAllSectionsComplete(this.abreiseSections)) {
+                        this.currentStep = 3;
+                        this.currentSection = this.defaultSections[this.currentStep] || 'allgemein';
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+
+                    this.currentSection = this.abreiseSections[0];
+                    this.updateView();
+                    this.scrollToTop();
+                    return;
                 }
 
                 if (this.currentStep < 3) {
@@ -1173,7 +1215,6 @@
                     const data = JSON.parse(saved);
                     this.currentStep = data.currentStep || 0;
                     this.currentSection = data.currentSection || 'anreise';
-                    this.stepComplete = data.stepComplete || {};
                 }
             }
         }
