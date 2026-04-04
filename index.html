@@ -74,6 +74,16 @@
         .nav-buttons { display: flex; gap: 15px; justify-content: space-between; align-items: center; margin-top: 30px; }
         .step-complete { display: flex; align-items: center; gap: 10px; margin-left: auto; }
         .complete-checkbox { transform: scale(1.6); accent-color: #48bb78; }
+        .sequence-info {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: #f0fff4;
+            border-left: 4px solid #38a169;
+            color: #22543d;
+            font-weight: 600;
+        }
         .btn { padding: 12px 24px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 16px; }
         .btn-primary { background: #4299e1; color: white; }
         .btn-primary:hover:not(:disabled) { background: #3182ce; transform: translateY(-1px); }
@@ -788,6 +798,7 @@
             </div>
             <button class="btn btn-primary" id="nextBtn">Nächstes Kapitel →</button>
         </div>
+        <div class="sequence-info" id="sequenceInfo" role="status" aria-live="polite"></div>
     </main>
 
     <script>
@@ -823,6 +834,8 @@
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
                 this.nextBtn = document.getElementById('nextBtn');
+                this.stepCompleteCheckbox = document.getElementById('stepComplete');
+                this.sequenceInfo = document.getElementById('sequenceInfo');
 
                 // Hauptkapitel-Leiste
                 this.chapterButtons.forEach(button => {
@@ -835,6 +848,14 @@
                 // Navigation buttons
                 this.nextBtn.addEventListener('click', () => this.nextStep());
                 this.prevBtn.addEventListener('click', () => this.prevStep());
+                if (this.stepCompleteCheckbox) {
+                    this.stepCompleteCheckbox.addEventListener('change', () => {
+                        if (this.currentStep !== 1 && this.currentStep !== 2) return;
+                        this.stepComplete[this.currentSection] = this.stepCompleteCheckbox.checked;
+                        this.saveProgress();
+                        this.updateSequenceInfo();
+                    });
+                }
 
                 this.loadProgress();
                 this.updateView();
@@ -858,6 +879,47 @@
                 this.updateContent();
                 this.updateProgress();
                 this.updateNextMuellTermin();
+                this.saveProgress();
+            }
+
+            getCurrentSequenceSections() {
+                if (this.currentStep === 1) return this.ankunftSections;
+                if (this.currentStep === 2) return this.abreiseSections;
+                return [];
+            }
+
+            findFirstIncompleteSection(sections) {
+                return sections.find(sectionId => !this.stepComplete[sectionId]);
+            }
+
+            areAllSectionsComplete(sections) {
+                return sections.length > 0 && sections.every(sectionId => this.stepComplete[sectionId]);
+            }
+
+            getSequenceInfoMessage() {
+                if (this.currentStep === 1) {
+                    return 'Prima, du hast alle Punkte bei der Ankunft abgearbeitet. Ich wünsche dir erholsame Tage auf der Hütte.';
+                }
+
+                if (this.currentStep === 2) {
+                    return 'Prima, du hast alle Punkte bei der Abreise abgearbeitet. Ich wünsche dir eine gute Heimfahrt.';
+                }
+
+                return '';
+            }
+
+            updateSequenceInfo() {
+                if (!this.sequenceInfo) return;
+
+                const sections = this.getCurrentSequenceSections();
+                if (!this.areAllSectionsComplete(sections)) {
+                    this.sequenceInfo.style.display = 'none';
+                    this.sequenceInfo.textContent = '';
+                    return;
+                }
+
+                this.sequenceInfo.textContent = this.getSequenceInfoMessage();
+                this.sequenceInfo.style.display = 'block';
             }
 
             getMuellTermineNext3Weeks() {
@@ -964,6 +1026,13 @@
                     stepCompleteDiv.style.display = (this.currentStep === 1 || this.currentStep === 2) ? 'flex' : 'none';
                 }
 
+                if (this.stepCompleteCheckbox) {
+                    const showCheckbox = this.currentStep === 1 || this.currentStep === 2;
+                    this.stepCompleteCheckbox.checked = showCheckbox ? !!this.stepComplete[this.currentSection] : false;
+                }
+
+                this.updateSequenceInfo();
+
                 this.updateNavigationControls();
             }
 
@@ -976,12 +1045,28 @@
                         this.scrollToTop();
                         return;
                     }
+
+                    const firstIncompleteAnkunftSection = this.findFirstIncompleteSection(this.ankunftSections);
+                    if (firstIncompleteAnkunftSection) {
+                        this.currentSection = firstIncompleteAnkunftSection;
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
                 }
 
                 if (this.currentStep === 2) {
                     const currentIndex = this.abreiseSections.indexOf(this.currentSection);
                     if (currentIndex >= 0 && currentIndex < this.abreiseSections.length - 1) {
                         this.currentSection = this.abreiseSections[currentIndex + 1];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+
+                    const firstIncompleteAbreiseSection = this.findFirstIncompleteSection(this.abreiseSections);
+                    if (firstIncompleteAbreiseSection) {
+                        this.currentSection = firstIncompleteAbreiseSection;
                         this.updateView();
                         this.scrollToTop();
                         return;
@@ -1046,20 +1131,26 @@
                 if (this.currentStep === 1) {
                     const isFirstAnkunftSection = this.currentSection === this.ankunftSections[0];
                     const isLastAnkunftSection = this.currentSection === this.ankunftSections[this.ankunftSections.length - 1];
+                    const hasOpenAnkunftSteps = !!this.findFirstIncompleteSection(this.ankunftSections);
                     this.prevBtn.style.display = '';
                     this.prevBtn.disabled = false;
                     this.prevBtn.textContent = isFirstAnkunftSection ? '← Zurück' : '← Vorheriger Schritt';
-                    this.nextBtn.textContent = isLastAnkunftSection ? 'Nächstes Kapitel →' : 'Nächster Schritt →';
+                    this.nextBtn.textContent = isLastAnkunftSection
+                        ? (hasOpenAnkunftSteps ? 'Offene Schritte prüfen →' : 'Nächstes Kapitel →')
+                        : 'Nächster Schritt →';
                     return;
                 }
 
                 if (this.currentStep === 2) {
                     const isFirstAbreiseSection = this.currentSection === this.abreiseSections[0];
                     const isLastAbreiseSection = this.currentSection === this.abreiseSections[this.abreiseSections.length - 1];
+                    const hasOpenAbreiseSteps = !!this.findFirstIncompleteSection(this.abreiseSections);
                     this.prevBtn.style.display = '';
                     this.prevBtn.disabled = false;
                     this.prevBtn.textContent = isFirstAbreiseSection ? '← Zurück' : '← Vorheriger Schritt';
-                    this.nextBtn.textContent = isLastAbreiseSection ? 'Nächstes Kapitel →' : 'Nächster Schritt →';
+                    this.nextBtn.textContent = isLastAbreiseSection
+                        ? (hasOpenAbreiseSteps ? 'Offene Schritte prüfen →' : 'Nächstes Kapitel →')
+                        : 'Nächster Schritt →';
                     return;
                 }
 
