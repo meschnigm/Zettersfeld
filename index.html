@@ -640,9 +640,6 @@
         <div class="step-container" data-step="1">
             <div id="ankunft">
                 <h2>Ankunft</h2>
-                <ul id="ankunft-step-list">
-                    <li>1) Sicherstellen dass Boiler-Sicherung aus ist.</li>
-                </ul>
             </div>
             <div id="strom">
                 <h3>Strom einschalten und Boiler-Sicherung prüfen</h3>
@@ -786,13 +783,6 @@
                 this.stepComplete = {};
                 this.defaultSections = ['anreise', 'ankunft', 'abreise', 'allgemein'];
                 this.ankunftSections = ['strom', 'wasser', 'boiler', 'ofen', 'eheizung'];
-                this.ankunftStepLabels = {
-                    strom: '1) Sicherstellen dass Boiler-Sicherung aus ist.',
-                    wasser: '2) Wasser aufdrehen',
-                    boiler: '3) Boiler in Betrieb nehmen',
-                    ofen: '4) Ofen in Betrieb nehmen',
-                    eheizung: '5) E-Heizung abbauen'
-                };
                 this.abreiseSections = ['abreise-strom-boiler', 'abreise-wasser-boiler', 'abreise-ofen', 'abreise-endreinigung', 'abreise-fensterlaeden', 'abreise-eheizung', 'abreise-kaffeemaschine', 'abreise-frostschutz', 'abreise-strom-aus', 'abreise-abschliessen', 'abreise-betriebskosten', 'abreise-vorraete'];
                 this.init();
             }
@@ -839,18 +829,9 @@
 
             updateView() {
                 this.updateTree();
-                this.updateStepSummaries();
                 this.updateContent();
                 this.updateProgress();
                 this.updateNextMuellTermin();
-            }
-
-            updateStepSummaries() {
-                const ankunftStepList = document.getElementById('ankunft-step-list');
-                if (ankunftStepList && this.currentStep === 1) {
-                    const label = this.ankunftStepLabels[this.currentSection] || this.ankunftStepLabels.strom;
-                    ankunftStepList.innerHTML = `<li>${label}</li>`;
-                }
             }
 
             getMuellTermineNext3Weeks() {
