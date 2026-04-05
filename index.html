@@ -638,7 +638,7 @@
 
                         <h3>Reservierungsanfrage</h3>
                         <div class="tip">
-                            Der eingebettete Google-Kalender kann selbst keine Freigabeanfragen versenden. Über dieses Formular wird deshalb eine vorbefüllte WhatsApp-Nachricht an Martin geöffnet.
+                            Der eingebettete Google-Kalender kann selbst keine Freigabeanfragen versenden. Über dieses Formular wird deshalb eine vorbefüllte WhatsApp-Nachricht an Manuel geöffnet.
                         </div>
                         <form class="reservation-form" onsubmit="sendReservationRequest(event)">
                             <div class="reservation-field">
@@ -696,6 +696,7 @@
                         <h3>Notfallausrüstung in der Hütte</h3>
                         <ul>
                             <li><strong>Feuerlöscher:</strong> im WC im EG und im Vorraum im 1. Stock.</li>
+                            <li><strong>Feuermelder und CO-Melder:</strong> In allen Schlafräumen sind Feuermelder vorhanden, in der Stube zusätzlich ein CO-Melder. Bitte hilf mit, die Geräte an der Testtaste regelmäßig auf Funktion zu prüfen.</li>
                             <li>
                                 <strong>Verbandskasten und Löschspray:</strong> im Eingangsbereich neben dem Skischuhtrockner. Das Löschspray ist superschnell einsatzbereit und die erste Option bei kleinen Bränden.
                                 <img class="step-image" src="bilder/optimized/Vorraum_1_Hilfe_Löschspray.webp" loading="lazy" decoding="async" alt="Verbandskasten und Löschspray im Eingangsbereich neben dem Skischuhtrockner">
@@ -939,7 +940,7 @@
                     }
 
                     const lines = [
-                        'Hallo Martin, ich moechte eine Reservierungsanfrage fuer die Huette senden.',
+                        'Hallo Manuel, ich moechte eine Reservierungsanfrage fuer die Huette senden.',
                         '',
                         `Name: ${name}`,
                         `Personen: ${guests}`,
@@ -952,7 +953,7 @@
                     }
 
                     const message = encodeURIComponent(lines.join('\n'));
-                    window.open(`https://wa.me/436643461632?text=${message}`, '_blank', 'noopener');
+                    window.open(`https://wa.me/4915202485714?text=${message}`, '_blank', 'noopener');
                 }
         class HuttenAnleitungPro {
             constructor() {
