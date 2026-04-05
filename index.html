@@ -741,10 +741,11 @@
                             Unterstützt werden Bilder vom Handy oder Rechner. Sehr große Bilder werden beim Speichern automatisch verkleinert.
                             <div class="upload-actions">
                                 <input id="slideshowUpload" type="file" accept="image/*" multiple>
-                                <button class="btn btn-secondary" type="button" onclick="clearUploadedSlideshowImages()">Eigene Bilder entfernen</button>
+                                <button class="btn btn-secondary" id="clearSlideshowUploadsBtn" type="button" onclick="clearUploadedSlideshowImages()">Eigene lokale Bilder entfernen</button>
                             </div>
-                            <div class="upload-help">Tipp: Nach dem Hochladen erscheinen die Bilder direkt in der Diashow und bleiben in diesem Browser gespeichert.</div>
+                            <div class="upload-help" id="slideshowUploadHelp">Tipp: Nach dem Hochladen erscheinen die Bilder direkt in der Diashow und bleiben in diesem Browser gespeichert.</div>
                         </div>
+                        <div class="tip" id="slideshowUploadStatus" style="display:none;"></div>
                     </div>
                     <div id="belegungskalender" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
@@ -1030,10 +1031,11 @@
         <div class="sequence-info" id="sequenceInfo" role="status" aria-live="polite"></div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
                 const SUPABASE_CONFIG = {
-                    url: 'SUPABASE_PROJECT_URL',
-                    anonKey: 'SUPABASE_ANON_PUBLIC_KEY',
+                    url: 'https://muvarzxaqzffpbegwnno.supabase.co',
+                    anonKey: 'sb_publishable_9sa-CQxdMdgtEwJi3KAReg_OgguFAIF',
                     bucket: 'slideshow',
                     imagesTable: 'slideshow_images',
                     moderationRequired: true
@@ -1061,32 +1063,67 @@
                         source: 'Außenansicht'
                     }
                 ];
+                let supabaseClient = null;
+                let sharedSlideshowImages = [];
                 let uploadedSlideshowImages = [];
                 let slideshowImages = [...defaultSlideshowImages];
                 let currentSlideshowIndex = 0;
 
                 function isSupabaseConfigured() {
-                    return ![
-                        'SUPABASE_PROJECT_URL',
-                        'SUPABASE_ANON_PUBLIC_KEY'
-                    ].includes(SUPABASE_CONFIG.url) && ![
-                        'SUPABASE_PROJECT_URL',
-                        'SUPABASE_ANON_PUBLIC_KEY'
-                    ].includes(SUPABASE_CONFIG.anonKey);
+                    return Boolean(SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey);
+                }
+                function getSupabaseClient() {
+                    if (!isSupabaseConfigured() || !window.supabase?.createClient) {
+                        return null;
+                    }
+                    if (!supabaseClient) {
+                        supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+                    }
+                    return supabaseClient;
+                }
+                function setSlideshowUploadStatus(message, variant = 'info') {
+                    const statusEl = document.getElementById('slideshowUploadStatus');
+                    if (!statusEl) return;
+                    if (!message) {
+                        statusEl.style.display = 'none';
+                        statusEl.textContent = '';
+                        statusEl.className = 'tip';
+                        return;
+                    }
+
+                    statusEl.textContent = message;
+                    statusEl.style.display = 'block';
+                    statusEl.className = variant === 'error' ? 'warn' : 'tip';
                 }
                 function updateSupabaseHints() {
                     const storageHint = document.getElementById('slideshowStorageHint');
                     const configHint = document.getElementById('supabaseConfigHint');
+                    const uploadHelp = document.getElementById('slideshowUploadHelp');
+                    const clearBtn = document.getElementById('clearSlideshowUploadsBtn');
                     if (!storageHint || !configHint) return;
 
                     if (isSupabaseConfigured()) {
-                        storageHint.textContent = 'Supabase ist konfiguriert. Die Diashow ist damit fuer gemeinsame Uploads vorbereitet.';
-                        configHint.textContent = `Bucket: ${SUPABASE_CONFIG.bucket} • Tabelle: ${SUPABASE_CONFIG.imagesTable}${SUPABASE_CONFIG.moderationRequired ? ' • neue Bilder koennen zuerst auf Freigabe warten' : ''}`;
+                        storageHint.textContent = 'Supabase ist verbunden. Uploads werden in die gemeinsame Galerie geschickt.';
+                        configHint.textContent = `Bucket: ${SUPABASE_CONFIG.bucket} • Tabelle: ${SUPABASE_CONFIG.imagesTable}${SUPABASE_CONFIG.moderationRequired ? ' • neue Bilder warten zuerst auf Freigabe' : ''}`;
+                        if (uploadHelp) {
+                            uploadHelp.textContent = SUPABASE_CONFIG.moderationRequired
+                                ? 'Tipp: Nach dem Upload wird das Bild gespeichert und erscheint fuer alle erst nach Freigabe.'
+                                : 'Tipp: Nach dem Upload erscheint das Bild direkt in der gemeinsamen Diashow.';
+                        }
+                        if (clearBtn) {
+                            clearBtn.style.display = 'none';
+                        }
                         return;
                     }
 
                     storageHint.textContent = 'Eigene Uploads werden aktuell nur im Browser dieses Geraets gespeichert. Fuer gemeinsame Uploads muss Supabase noch konfiguriert werden.';
                     configHint.textContent = 'Supabase ist noch nicht verbunden. Trage spaeter die Projektwerte im Konfigurationsblock der Seite ein, um gemeinsame Uploads fuer alle zu aktivieren.';
+                    if (uploadHelp) {
+                        uploadHelp.textContent = 'Tipp: Nach dem Hochladen erscheinen die Bilder direkt in der Diashow und bleiben in diesem Browser gespeichert.';
+                    }
+                    if (clearBtn) {
+                        clearBtn.style.display = '';
+                    }
                 }
 
                 // Interaktiver Menübaum für Allgemein
@@ -1101,7 +1138,7 @@
                     }
                 }
                 function getSlideshowImages() {
-                    return [...defaultSlideshowImages, ...uploadedSlideshowImages];
+                    return [...defaultSlideshowImages, ...sharedSlideshowImages, ...uploadedSlideshowImages];
                 }
                 function updateSlideshowState() {
                     slideshowImages = getSlideshowImages();
@@ -1148,9 +1185,15 @@
                     renderSlideshow();
                 }
                 function saveUploadedSlideshowImages() {
+                    if (isSupabaseConfigured()) return;
                     localStorage.setItem(SLIDESHOW_STORAGE_KEY, JSON.stringify(uploadedSlideshowImages));
                 }
                 function loadUploadedSlideshowImages() {
+                    if (isSupabaseConfigured()) {
+                        uploadedSlideshowImages = [];
+                        updateSlideshowState();
+                        return;
+                    }
                     try {
                         const saved = localStorage.getItem(SLIDESHOW_STORAGE_KEY);
                         uploadedSlideshowImages = saved ? JSON.parse(saved) : [];
@@ -1180,7 +1223,16 @@
                                 canvas.height = height;
                                 const context = canvas.getContext('2d');
                                 context.drawImage(image, 0, 0, width, height);
-                                resolve(canvas.toDataURL('image/jpeg', 0.82));
+                                canvas.toBlob(blob => {
+                                    if (!blob) {
+                                        reject(new Error('Bild konnte nicht verarbeitet werden.'));
+                                        return;
+                                    }
+                                    resolve({
+                                        dataUrl: canvas.toDataURL('image/jpeg', 0.82),
+                                        blob
+                                    });
+                                }, 'image/jpeg', 0.82);
                             };
                             image.onerror = reject;
                             image.src = reader.result;
@@ -1189,30 +1241,129 @@
                         reader.readAsDataURL(file);
                     });
                 }
+                async function loadSharedSlideshowImages() {
+                    const client = getSupabaseClient();
+                    if (!client) return;
+
+                    const { data, error } = await client
+                        .from(SUPABASE_CONFIG.imagesTable)
+                        .select('file_path, public_url, title, source, created_at')
+                        .eq('approved', true)
+                        .order('created_at', { ascending: false });
+
+                    if (error) {
+                        setSlideshowUploadStatus('Freigegebene Bilder konnten noch nicht aus Supabase geladen werden. Bitte Bucket, Tabelle und Policies pruefen.', 'error');
+                        return;
+                    }
+
+                    sharedSlideshowImages = (data || []).map(item => {
+                        const resolvedUrl = item.public_url || client.storage.from(SUPABASE_CONFIG.bucket).getPublicUrl(item.file_path).data.publicUrl;
+                        return {
+                            src: resolvedUrl,
+                            title: item.title || 'Gemeinsames Bild',
+                            source: item.source || 'Gemeinsame Galerie'
+                        };
+                    });
+
+                    renderSlideshow();
+                }
+                async function uploadImageToSupabase(file, processedImage) {
+                    const client = getSupabaseClient();
+                    const sanitizedBaseName = file.name
+                        .replace(/\.[^.]+$/, '')
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '') || 'huettenbild';
+                    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${sanitizedBaseName}.jpg`;
+                    const targetFolder = SUPABASE_CONFIG.moderationRequired ? 'pending' : 'approved';
+                    const filePath = `${targetFolder}/${fileName}`;
+
+                    const { error: uploadError } = await client.storage
+                        .from(SUPABASE_CONFIG.bucket)
+                        .upload(filePath, processedImage.blob, {
+                            cacheControl: '3600',
+                            contentType: 'image/jpeg',
+                            upsert: false
+                        });
+
+                    if (uploadError) {
+                        throw uploadError;
+                    }
+
+                    const publicUrl = client.storage.from(SUPABASE_CONFIG.bucket).getPublicUrl(filePath).data.publicUrl;
+                    const { error: insertError } = await client.from(SUPABASE_CONFIG.imagesTable).insert({
+                        file_path: filePath,
+                        public_url: publicUrl,
+                        title: file.name.replace(/\.[^.]+$/, ''),
+                        approved: !SUPABASE_CONFIG.moderationRequired,
+                        source: 'Supabase Upload'
+                    });
+
+                    if (insertError) {
+                        throw insertError;
+                    }
+
+                    if (!SUPABASE_CONFIG.moderationRequired) {
+                        sharedSlideshowImages.unshift({
+                            src: publicUrl,
+                            title: file.name.replace(/\.[^.]+$/, ''),
+                            source: 'Gemeinsame Galerie'
+                        });
+                    }
+                }
                 async function handleSlideshowUpload(event) {
                     const files = Array.from(event.target.files || []);
                     if (!files.length) return;
 
-                    for (const file of files) {
-                        const dataUrl = await resizeImageFile(file);
-                        uploadedSlideshowImages.push({
-                            src: dataUrl,
+                    setSlideshowUploadStatus('Bilder werden verarbeitet ...');
+
+                    try {
+                        if (isSupabaseConfigured()) {
+                            for (const file of files) {
+                                const processedImage = await resizeImageFile(file);
+                                await uploadImageToSupabase(file, processedImage);
+                            }
+
+                            await loadSharedSlideshowImages();
+                            updateSlideshowState();
+                            currentSlideshowIndex = slideshowImages.length - 1;
+                            renderSlideshow();
+                            setSlideshowUploadStatus(
+                                SUPABASE_CONFIG.moderationRequired
+                                    ? 'Upload erfolgreich. Die Bilder sind gespeichert und erscheinen nach Freigabe in der gemeinsamen Diashow.'
+                                    : 'Upload erfolgreich. Die Bilder sind jetzt in der gemeinsamen Diashow sichtbar.'
+                            );
+                            event.target.value = '';
+                            return;
+                        }
+
+                        for (const file of files) {
+                            const processedImage = await resizeImageFile(file);
+                            uploadedSlideshowImages.push({
+                            src: processedImage.dataUrl,
                             title: file.name.replace(/\.[^.]+$/, ''),
                             source: 'Eigener Upload'
                         });
-                    }
+                        }
 
-                    saveUploadedSlideshowImages();
-                    updateSlideshowState();
-                    currentSlideshowIndex = slideshowImages.length - 1;
-                    renderSlideshow();
-                    event.target.value = '';
+                        saveUploadedSlideshowImages();
+                        updateSlideshowState();
+                        currentSlideshowIndex = slideshowImages.length - 1;
+                        renderSlideshow();
+                        setSlideshowUploadStatus('Upload lokal gespeichert. Diese Bilder sind nur auf diesem Geraet sichtbar.');
+                        event.target.value = '';
+                    } catch (error) {
+                        console.error(error);
+                        setSlideshowUploadStatus('Upload fehlgeschlagen. Bitte pruefe Bucket, Tabelle und Policies in Supabase.', 'error');
+                    }
                 }
                 function clearUploadedSlideshowImages() {
+                    if (isSupabaseConfigured()) return;
                     uploadedSlideshowImages = [];
                     saveUploadedSlideshowImages();
                     currentSlideshowIndex = 0;
                     renderSlideshow();
+                    setSlideshowUploadStatus('Lokale Bilder wurden aus diesem Browser entfernt.');
                 }
                 function sendReservationRequest(event) {
                     event.preventDefault();
@@ -1296,7 +1447,11 @@
                 this.resetSequenceProgress();
                 loadUploadedSlideshowImages();
                 updateSupabaseHints();
+                setSlideshowUploadStatus('');
                 renderSlideshow();
+                if (isSupabaseConfigured()) {
+                    loadSharedSlideshowImages();
+                }
                 const slideshowUpload = document.getElementById('slideshowUpload');
                 if (slideshowUpload) {
                     slideshowUpload.addEventListener('change', handleSlideshowUpload);
