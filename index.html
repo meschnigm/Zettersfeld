@@ -716,13 +716,13 @@
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
                         <h3>🖼️ Diashow</h3>
                         <div class="tip">
-                            Ein paar schöne Eindrücke von der Hütte und vom Zettersfeld. Eigene Bilder können direkt auf diesem Gerät hochgeladen und in die Diashow aufgenommen werden.
+                            Hier findest du schöne Eindrücke von der Hütte und vom Zettersfeld.
                         </div>
                         <div class="tip" id="slideshowStorageHint">
-                            Eigene Uploads werden nur im aktuellen Browser auf diesem Gerät gespeichert. Sie werden nicht automatisch mit GitHub synchronisiert.
+                            Eigene Bilder können direkt hochgeladen und mit allen geteilt werden.
                         </div>
                         <div class="tip" id="supabaseConfigHint">
-                            Supabase ist noch nicht verbunden. Trage spaeter die Projektwerte im Konfigurationsblock der Seite ein, um gemeinsame Uploads fuer alle zu aktivieren.
+                            Neue Bilder erscheinen je nach Einstellung direkt oder erst nach Freigabe.
                         </div>
                         <div class="slideshow-frame">
                             <div class="slideshow-stage">
@@ -738,12 +738,12 @@
                         </div>
                         <div class="tip">
                             <strong>Eigene Bilder hinzufügen</strong><br>
-                            Unterstützt werden Bilder vom Handy oder Rechner. Sehr große Bilder werden beim Speichern automatisch verkleinert.
+                            Bilder vom Handy oder Rechner können direkt ausgewählt werden.
                             <div class="upload-actions">
                                 <input id="slideshowUpload" type="file" accept="image/*" multiple>
                                 <button class="btn btn-secondary" id="clearSlideshowUploadsBtn" type="button" onclick="clearUploadedSlideshowImages()">Eigene lokale Bilder entfernen</button>
                             </div>
-                            <div class="upload-help" id="slideshowUploadHelp">Tipp: Nach dem Hochladen erscheinen die Bilder direkt in der Diashow und bleiben in diesem Browser gespeichert.</div>
+                            <div class="upload-help" id="slideshowUploadHelp">Tipp: Nach dem Hochladen erscheint das Bild in der Diashow.</div>
                         </div>
                         <div class="tip" id="slideshowUploadStatus" style="display:none;"></div>
                     </div>
@@ -1097,11 +1097,13 @@
                     if (!storageHint || !configHint) return;
 
                     if (isSupabaseConfigured()) {
-                        storageHint.textContent = 'Supabase ist verbunden. Uploads werden in die gemeinsame Galerie geschickt.';
-                        configHint.textContent = `Bucket: ${SUPABASE_CONFIG.bucket} • Tabelle: ${SUPABASE_CONFIG.imagesTable}${SUPABASE_CONFIG.moderationRequired ? ' • neue Bilder warten zuerst auf Freigabe' : ''}`;
+                        storageHint.textContent = 'Eigene Bilder können direkt hochgeladen und mit allen geteilt werden.';
+                        configHint.textContent = SUPABASE_CONFIG.moderationRequired
+                            ? 'Neue Bilder erscheinen nach der Freigabe in der Diashow.'
+                            : 'Neue Bilder erscheinen direkt in der Diashow.';
                         if (uploadHelp) {
                             uploadHelp.textContent = SUPABASE_CONFIG.moderationRequired
-                                ? 'Tipp: Nach dem Upload wird das Bild gespeichert und erscheint fuer alle erst nach Freigabe.'
+                                ? 'Tipp: Nach dem Hochladen erscheint das Bild nach der Freigabe in der Diashow.'
                                 : 'Tipp: Nach dem Upload erscheint das Bild direkt in der gemeinsamen Diashow.';
                         }
                         if (clearBtn) {
@@ -1110,10 +1112,10 @@
                         return;
                     }
 
-                    storageHint.textContent = 'Eigene Uploads werden aktuell nur im Browser dieses Geraets gespeichert. Fuer gemeinsame Uploads muss Supabase noch konfiguriert werden.';
-                    configHint.textContent = 'Supabase ist noch nicht verbunden. Trage spaeter die Projektwerte im Konfigurationsblock der Seite ein, um gemeinsame Uploads fuer alle zu aktivieren.';
+                    storageHint.textContent = 'Eigene Bilder bleiben aktuell nur auf diesem Gerät gespeichert.';
+                    configHint.textContent = 'Sobald die gemeinsame Galerie aktiv ist, werden neue Bilder für alle sichtbar.';
                     if (uploadHelp) {
-                        uploadHelp.textContent = 'Tipp: Nach dem Hochladen erscheinen die Bilder direkt in der Diashow und bleiben in diesem Browser gespeichert.';
+                        uploadHelp.textContent = 'Tipp: Nach dem Hochladen erscheint das Bild in der Diashow.';
                     }
                     if (clearBtn) {
                         clearBtn.style.display = '';
