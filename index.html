@@ -1095,6 +1095,21 @@
                     statusEl.style.display = 'block';
                     statusEl.className = variant === 'error' ? 'warn' : 'tip';
                 }
+                function createReadableSlideshowTitle(rawTitle, createdAt) {
+                    const trimmed = (rawTitle || '').trim();
+                    const looksCryptic = /^[0-9a-f-]{24,}$/i.test(trimmed) || /^[0-9]{8,}$/i.test(trimmed);
+                    if (trimmed && !looksCryptic) {
+                        return trimmed;
+                    }
+
+                    const date = createdAt ? new Date(createdAt) : new Date();
+                    const dateLabel = date.toLocaleDateString('de-DE', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                    return `Gemeinsames Bild vom ${dateLabel}`;
+                }
                 function updateSupabaseHints() {
                     const storageHint = document.getElementById('slideshowStorageHint');
                     const configHint = document.getElementById('supabaseConfigHint');
@@ -1256,15 +1271,28 @@
                         return;
                     }
 
-                    sharedSlideshowImages = (data || []).map(item => {
-                        const resolvedUrl = item.public_url || client.storage.from(SUPABASE_CONFIG.bucket).getPublicUrl(item.file_path).data.publicUrl;
+                    sharedSlideshowImages = (await Promise.all((data || []).map(async item => {
+                        const { data: signedData, error: signedUrlError } = await client.storage
+                            .from(SUPABASE_CONFIG.bucket)
+                            .createSignedUrl(item.file_path, 60 * 60);
+
+                        if (signedUrlError || !signedData?.signedUrl) {
+                            return null;
+                        }
+
                         return {
-                            src: resolvedUrl,
-                            title: item.title || 'Gemeinsames Bild',
+                            src: signedData.signedUrl,
+                            title: createReadableSlideshowTitle(item.title, item.created_at),
                             source: item.source || 'Gemeinsame Galerie'
                         };
-                    });
+                    }))).filter(Boolean);
 
+                    if (!sharedSlideshowImages.length && (data || []).length) {
+                        setSlideshowUploadStatus('Freigegebene Bilder wurden gefunden, aber die Bild-URLs konnten nicht erzeugt werden. Bitte Bucket-Zugriff pruefen.', 'error');
+                        return;
+                    }
+
+                    setSlideshowUploadStatus('');
                     renderSlideshow();
                 }
                 async function uploadImageToSupabase(file, processedImage) {
@@ -1290,11 +1318,10 @@
                         throw uploadError;
                     }
 
-                    const publicUrl = client.storage.from(SUPABASE_CONFIG.bucket).getPublicUrl(filePath).data.publicUrl;
                     const { error: insertError } = await client.from(SUPABASE_CONFIG.imagesTable).insert({
                         file_path: filePath,
-                        public_url: publicUrl,
-                        title: file.name.replace(/\.[^.]+$/, ''),
+                        public_url: null,
+                        title: createReadableSlideshowTitle(file.name.replace(/\.[^.]+$/, ''), new Date().toISOString()),
                         approved: !SUPABASE_CONFIG.moderationRequired,
                         source: 'Supabase Upload'
                     });
@@ -1305,8 +1332,8 @@
 
                     if (!SUPABASE_CONFIG.moderationRequired) {
                         sharedSlideshowImages.unshift({
-                            src: publicUrl,
-                            title: file.name.replace(/\.[^.]+$/, ''),
+                            src: URL.createObjectURL(processedImage.blob),
+                            title: createReadableSlideshowTitle(file.name.replace(/\.[^.]+$/, ''), new Date().toISOString()),
                             source: 'Gemeinsame Galerie'
                         });
                     }
