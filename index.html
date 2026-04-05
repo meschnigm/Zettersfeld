@@ -217,6 +217,82 @@
             min-height: 120px;
             resize: vertical;
         }
+        .slideshow-frame {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        .slideshow-stage {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            background: #1a202c;
+        }
+        .slideshow-stage img {
+            width: 100%;
+            max-height: 68vh;
+            object-fit: contain;
+            display: block;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+            background: #1a202c;
+        }
+        .slideshow-caption {
+            margin-top: 12px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .slideshow-meta {
+            margin-top: 4px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        .slideshow-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .slideshow-thumbs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .slideshow-thumb {
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .slideshow-thumb.active {
+            border-color: #4299e1;
+        }
+        .slideshow-thumb img {
+            width: 100%;
+            height: 84px;
+            object-fit: cover;
+            display: block;
+            margin: 0;
+            border-radius: 10px;
+            box-shadow: none;
+        }
+        .upload-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 12px;
+        }
+        .upload-help {
+            font-size: 14px;
+            color: #4a5568;
+        }
         h1 { color: #2d3748; font-size: 2.2em; text-align: center; margin-bottom: 20px; }
         h2 { color: #2b6cb0; border-bottom: 3px solid #bee3f8; padding-bottom: 10px; margin-bottom: 20px; }
         h3 { color: #2c5282; margin: 25px 0 15px 0; }
@@ -367,6 +443,16 @@
             .reservation-form {
                 grid-template-columns: 1fr;
             }
+            .slideshow-stage img {
+                max-height: 46vh;
+            }
+            .slideshow-thumbs {
+                grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+            }
+            .upload-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
@@ -393,6 +479,7 @@
                                 <li><a href="#skischuhtrockner" onclick="showAllgemeinSection('skischuhtrockner')">👢 Skischuhtrockner</a></li>
                                 <li><a href="#skibindung" onclick="showAllgemeinSection('skibindung')">⛷️ Skibindung einstellen</a></li>
                                 <li><a href="#hofladen" onclick="showAllgemeinSection('hofladen')">🧺 Hofladen</a></li>
+                                <li><a href="#diashow" onclick="showAllgemeinSection('diashow')">🖼️ Diashow</a></li>
                                 <li><a href="#belegungskalender" onclick="showAllgemeinSection('belegungskalender')">📅 Belegungskalender</a></li>
                                 <li><a href="#muellkalender" onclick="showAllgemeinSection('muellkalender')">🗑️ Müll</a></li>
                                 <li><a href="#notfall" onclick="showAllgemeinSection('notfall')">🚨 Notfall</a></li>
@@ -624,6 +711,40 @@
                             <li><strong>Adresse:</strong> Prappernitze 1, 9904 Thurn</li>
                             <li><strong>Vorbestellung:</strong> per WhatsApp möglich.</li>
                         </ul>
+                    </div>
+                    <div id="diashow" style="display:none; margin-top:20px;">
+                        <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
+                        <h3>🖼️ Diashow</h3>
+                        <div class="tip">
+                            Ein paar schöne Eindrücke von der Hütte und vom Zettersfeld. Eigene Bilder können direkt auf diesem Gerät hochgeladen und in die Diashow aufgenommen werden.
+                        </div>
+                        <div class="tip" id="slideshowStorageHint">
+                            Eigene Uploads werden nur im aktuellen Browser auf diesem Gerät gespeichert. Sie werden nicht automatisch mit GitHub synchronisiert.
+                        </div>
+                        <div class="tip" id="supabaseConfigHint">
+                            Supabase ist noch nicht verbunden. Trage spaeter die Projektwerte im Konfigurationsblock der Seite ein, um gemeinsame Uploads fuer alle zu aktivieren.
+                        </div>
+                        <div class="slideshow-frame">
+                            <div class="slideshow-stage">
+                                <img id="slideshowImage" src="bilder/optimized/Hütte_Winter.webp" alt="Diashow Bild der Hütte">
+                            </div>
+                            <div class="slideshow-caption" id="slideshowCaption">Hütte im Winter</div>
+                            <div class="slideshow-meta" id="slideshowMeta">Bild 1 von 1</div>
+                            <div class="slideshow-controls">
+                                <button class="btn btn-secondary" type="button" onclick="prevSlideshowImage()">← Vorheriges Bild</button>
+                                <button class="btn btn-primary" type="button" onclick="nextSlideshowImage()">Nächstes Bild →</button>
+                            </div>
+                            <div class="slideshow-thumbs" id="slideshowThumbs"></div>
+                        </div>
+                        <div class="tip">
+                            <strong>Eigene Bilder hinzufügen</strong><br>
+                            Unterstützt werden Bilder vom Handy oder Rechner. Sehr große Bilder werden beim Speichern automatisch verkleinert.
+                            <div class="upload-actions">
+                                <input id="slideshowUpload" type="file" accept="image/*" multiple>
+                                <button class="btn btn-secondary" type="button" onclick="clearUploadedSlideshowImages()">Eigene Bilder entfernen</button>
+                            </div>
+                            <div class="upload-help">Tipp: Nach dem Hochladen erscheinen die Bilder direkt in der Diashow und bleiben in diesem Browser gespeichert.</div>
+                        </div>
                     </div>
                     <div id="belegungskalender" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
@@ -910,16 +1031,188 @@
     </main>
 
     <script>
+                const SUPABASE_CONFIG = {
+                    url: 'SUPABASE_PROJECT_URL',
+                    anonKey: 'SUPABASE_ANON_PUBLIC_KEY',
+                    bucket: 'slideshow',
+                    imagesTable: 'slideshow_images',
+                    moderationRequired: true
+                };
+                const SLIDESHOW_STORAGE_KEY = 'huttenAnleitungProSlideshowUploads';
+                const defaultSlideshowImages = [
+                    {
+                        src: 'bilder/optimized/Hütte_Winter.webp',
+                        title: 'Hütte im Winter',
+                        source: 'Hüttenmotiv'
+                    },
+                    {
+                        src: 'bilder/optimized/alm-foto-winter-1600.webp',
+                        title: 'Winterstimmung am Zettersfeld',
+                        source: 'Winterpanorama'
+                    },
+                    {
+                        src: 'bilder/optimized/luftaufnahme-2-1600.webp',
+                        title: 'Luftaufnahme rund um die Hütte',
+                        source: 'Umgebung'
+                    },
+                    {
+                        src: 'bilder/optimized/bild0794-1600.webp',
+                        title: 'Blick auf die Hütte',
+                        source: 'Außenansicht'
+                    }
+                ];
+                let uploadedSlideshowImages = [];
+                let slideshowImages = [...defaultSlideshowImages];
+                let currentSlideshowIndex = 0;
+
+                function isSupabaseConfigured() {
+                    return ![
+                        'SUPABASE_PROJECT_URL',
+                        'SUPABASE_ANON_PUBLIC_KEY'
+                    ].includes(SUPABASE_CONFIG.url) && ![
+                        'SUPABASE_PROJECT_URL',
+                        'SUPABASE_ANON_PUBLIC_KEY'
+                    ].includes(SUPABASE_CONFIG.anonKey);
+                }
+                function updateSupabaseHints() {
+                    const storageHint = document.getElementById('slideshowStorageHint');
+                    const configHint = document.getElementById('supabaseConfigHint');
+                    if (!storageHint || !configHint) return;
+
+                    if (isSupabaseConfigured()) {
+                        storageHint.textContent = 'Supabase ist konfiguriert. Die Diashow ist damit fuer gemeinsame Uploads vorbereitet.';
+                        configHint.textContent = `Bucket: ${SUPABASE_CONFIG.bucket} • Tabelle: ${SUPABASE_CONFIG.imagesTable}${SUPABASE_CONFIG.moderationRequired ? ' • neue Bilder koennen zuerst auf Freigabe warten' : ''}`;
+                        return;
+                    }
+
+                    storageHint.textContent = 'Eigene Uploads werden aktuell nur im Browser dieses Geraets gespeichert. Fuer gemeinsame Uploads muss Supabase noch konfiguriert werden.';
+                    configHint.textContent = 'Supabase ist noch nicht verbunden. Trage spaeter die Projektwerte im Konfigurationsblock der Seite ein, um gemeinsame Uploads fuer alle zu aktivieren.';
+                }
+
                 // Interaktiver Menübaum für Allgemein
                 function showAllgemeinSection(sectionId) {
                     const menu = document.getElementById('menubaum');
-                    const detailSections = ['einrichtung','wlan','internet','beleuchtung','musik','skischuhtrockner','skibindung','hofladen','belegungskalender','muellkalender','notfall'];
+                    const detailSections = ['einrichtung','wlan','internet','beleuchtung','musik','skischuhtrockner','skibindung','hofladen','diashow','belegungskalender','muellkalender','notfall'];
                     detailSections.forEach(id => {
                         document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
                     });
                     if (menu) {
                         menu.style.display = sectionId === 'menubaum' ? 'block' : 'none';
                     }
+                }
+                function getSlideshowImages() {
+                    return [...defaultSlideshowImages, ...uploadedSlideshowImages];
+                }
+                function updateSlideshowState() {
+                    slideshowImages = getSlideshowImages();
+                    if (!slideshowImages.length) {
+                        currentSlideshowIndex = 0;
+                    } else if (currentSlideshowIndex >= slideshowImages.length) {
+                        currentSlideshowIndex = slideshowImages.length - 1;
+                    }
+                }
+                function renderSlideshow() {
+                    updateSlideshowState();
+                    const imageEl = document.getElementById('slideshowImage');
+                    const captionEl = document.getElementById('slideshowCaption');
+                    const metaEl = document.getElementById('slideshowMeta');
+                    const thumbsEl = document.getElementById('slideshowThumbs');
+                    if (!imageEl || !captionEl || !metaEl || !thumbsEl || !slideshowImages.length) {
+                        return;
+                    }
+
+                    const currentImage = slideshowImages[currentSlideshowIndex];
+                    imageEl.src = currentImage.src;
+                    imageEl.alt = currentImage.title;
+                    captionEl.textContent = currentImage.title;
+                    metaEl.textContent = `Bild ${currentSlideshowIndex + 1} von ${slideshowImages.length}${currentImage.source ? ` • ${currentImage.source}` : ''}`;
+
+                    thumbsEl.innerHTML = slideshowImages.map((image, index) => `
+                        <button class="slideshow-thumb${index === currentSlideshowIndex ? ' active' : ''}" type="button" onclick="showSlideshowImage(${index})" aria-label="${image.title}">
+                            <img src="${image.src}" alt="${image.title}">
+                        </button>
+                    `).join('');
+                }
+                function showSlideshowImage(index) {
+                    currentSlideshowIndex = index;
+                    renderSlideshow();
+                }
+                function prevSlideshowImage() {
+                    updateSlideshowState();
+                    currentSlideshowIndex = (currentSlideshowIndex - 1 + slideshowImages.length) % slideshowImages.length;
+                    renderSlideshow();
+                }
+                function nextSlideshowImage() {
+                    updateSlideshowState();
+                    currentSlideshowIndex = (currentSlideshowIndex + 1) % slideshowImages.length;
+                    renderSlideshow();
+                }
+                function saveUploadedSlideshowImages() {
+                    localStorage.setItem(SLIDESHOW_STORAGE_KEY, JSON.stringify(uploadedSlideshowImages));
+                }
+                function loadUploadedSlideshowImages() {
+                    try {
+                        const saved = localStorage.getItem(SLIDESHOW_STORAGE_KEY);
+                        uploadedSlideshowImages = saved ? JSON.parse(saved) : [];
+                    } catch {
+                        uploadedSlideshowImages = [];
+                    }
+                    updateSlideshowState();
+                }
+                function resizeImageFile(file) {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            const image = new Image();
+                            image.onload = () => {
+                                const maxDimension = 1600;
+                                let { width, height } = image;
+                                if (width > height && width > maxDimension) {
+                                    height = Math.round((height * maxDimension) / width);
+                                    width = maxDimension;
+                                } else if (height >= width && height > maxDimension) {
+                                    width = Math.round((width * maxDimension) / height);
+                                    height = maxDimension;
+                                }
+
+                                const canvas = document.createElement('canvas');
+                                canvas.width = width;
+                                canvas.height = height;
+                                const context = canvas.getContext('2d');
+                                context.drawImage(image, 0, 0, width, height);
+                                resolve(canvas.toDataURL('image/jpeg', 0.82));
+                            };
+                            image.onerror = reject;
+                            image.src = reader.result;
+                        };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                }
+                async function handleSlideshowUpload(event) {
+                    const files = Array.from(event.target.files || []);
+                    if (!files.length) return;
+
+                    for (const file of files) {
+                        const dataUrl = await resizeImageFile(file);
+                        uploadedSlideshowImages.push({
+                            src: dataUrl,
+                            title: file.name.replace(/\.[^.]+$/, ''),
+                            source: 'Eigener Upload'
+                        });
+                    }
+
+                    saveUploadedSlideshowImages();
+                    updateSlideshowState();
+                    currentSlideshowIndex = slideshowImages.length - 1;
+                    renderSlideshow();
+                    event.target.value = '';
+                }
+                function clearUploadedSlideshowImages() {
+                    uploadedSlideshowImages = [];
+                    saveUploadedSlideshowImages();
+                    currentSlideshowIndex = 0;
+                    renderSlideshow();
                 }
                 function sendReservationRequest(event) {
                     event.preventDefault();
@@ -971,7 +1264,7 @@
                 this.mainContent = document.querySelector('.main-content');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #wasser-aufdrehen, #boiler, #ofen, #eheizung, #abreise, #abreise-strom-boiler, #abreise-wasser-boiler, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-strom-aus, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #belegungskalender, #notfall, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #wasser-aufdrehen, #boiler, #ofen, #eheizung, #abreise, #abreise-strom-boiler, #abreise-wasser-boiler, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-strom-aus, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #diashow, #belegungskalender, #notfall, #muellkalender'
                 );
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
@@ -1001,6 +1294,13 @@
 
                 this.loadProgress();
                 this.resetSequenceProgress();
+                loadUploadedSlideshowImages();
+                updateSupabaseHints();
+                renderSlideshow();
+                const slideshowUpload = document.getElementById('slideshowUpload');
+                if (slideshowUpload) {
+                    slideshowUpload.addEventListener('change', handleSlideshowUpload);
+                }
                 this.updateView();
             }
 
@@ -1150,17 +1450,17 @@
                 } else if (this.currentStep === 3) {
                     // Allgemein: Menübaum und keine anderen Abschnitte
                     this.sections.forEach(section => {
-                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","einrichtung","hofladen","belegungskalender","notfall","muellkalender"].includes(section.id)) {
+                        if (["allgemein","menubaum","wlan","internet","musik","beleuchtung","skibindung","skischuhtrockner","einrichtung","hofladen","diashow","belegungskalender","notfall","muellkalender"].includes(section.id)) {
                             section.style.display = 'block';
                         } else {
                             section.style.display = 'none';
                         }
                     });
                     // Nur Menübaum anzeigen, keine Detailabschnitte
-                    ['einrichtung','wlan','internet','beleuchtung','musik','skischuhtrockner','skibindung','hofladen','belegungskalender','muellkalender','notfall'].forEach(id => {
+                    ['einrichtung','wlan','internet','beleuchtung','musik','skischuhtrockner','skibindung','hofladen','diashow','belegungskalender','muellkalender','notfall'].forEach(id => {
                         document.getElementById(id).style.display = 'none';
                     });
-                    if (["einrichtung","wlan","internet","beleuchtung","musik","skischuhtrockner","skibindung","hofladen","belegungskalender","muellkalender","notfall"].includes(this.currentSection)) {
+                    if (["einrichtung","wlan","internet","beleuchtung","musik","skischuhtrockner","skibindung","hofladen","diashow","belegungskalender","muellkalender","notfall"].includes(this.currentSection)) {
                         showAllgemeinSection(this.currentSection);
                     }
                 } else {
