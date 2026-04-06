@@ -560,7 +560,7 @@
                     <div id="beleuchtung" style="display:none; margin-top:20px;">
                         <button class="btn btn-secondary section-back" onclick="showAllgemeinSection('menubaum')">← Zurück zum Menü</button>
                         <h3>💡 Beleuchtung (Philips Hue)</h3>
-                        <img src="bilder/hue-bridge-weiss.svg" alt="Weiße Hue Bridge hinter dem Fernseher">
+                        <img src="bilder/optimized/Stube_Hue_Bridge.webp" alt="Hue Bridge hinter dem Fernseher in der Stube">
                         <p><a class="map-link" target="_blank" rel="noopener" href="https://www.philips-hue.com/de-de/explore-hue/apps">Hue-App herunterladen</a></p>
                         <ul>
                             <li>Hue-App auf dem Smartphone installieren und öffnen.</li>
@@ -668,8 +668,8 @@
 
                         <h3>Vorraum 1. Stock</h3>
                         <ul>
-                            <li>5 Liegestühle.</li>
-                            <li>Werkzeug (alles, was man braucht).</li>
+                            <li>5 Liegestühle.<br><img class="step-image" src="bilder/optimized/Vorraum_OG_Liegestühle.webp" loading="lazy" decoding="async" alt="Liegestuehle im Vorraum im 1. Stock"></li>
+                            <li>Werkzeug (alles, was man braucht).<br><img class="step-image" src="bilder/optimized/Vorraum_OG_Werkzeug.webp" loading="lazy" decoding="async" alt="Werkzeug im Vorraum im 1. Stock"></li>
                             <li>5 Rennrodel und Zipfelbobs. Wichtig: Solltest du beim Rodeln an einer Kneipe vorbeikommen, bitte die Schlitten mit den Schlössern gegen Diebstahl sichern. Der Code für die Schlösser ist 911.</li>
                         </ul>
 
@@ -688,6 +688,7 @@
                         <h3>Im 1. Schuppen</h3>
                         <ul>
                             <li>Frostschutz.</li>
+                            <li>Wickinger Schach.</li>
                         </ul>
 
                         <h3>Sanitär &amp; Reinigung</h3>
@@ -1048,8 +1049,11 @@
                     <img class="step-image" src="bilder/optimized/Bad_Frostschutz.webp" loading="lazy" decoding="async" alt="Frostschutzmittel fuer WC und Waschbecken im Bad">
                 </div>
             </div>
+            <div id="abreise-wasser-zuleitung-entleeren" class="final-checklist">
+                <h3>9) Wasser-Zuleitung entleeren</h3>
+            </div>
             <div id="abreise-fensterlaeden" class="final-checklist">
-                <h3>9) Fensterläden schließen</h3>
+                <h3>10) Fensterläden schließen</h3>
                 <ul>
                     <li>Alle Fenster vollständig schließen.</li>
                     <li>Danach alle Fensterläden schließen.</li>
@@ -1057,17 +1061,12 @@
                 </ul>
             </div>
             <div id="abreise-abschliessen" class="final-checklist">
-                <h3>10) Abschließen</h3>
+                <h3>11) Abschließen</h3>
                 <ul>
                     <li>Hüttentür, Nebentüren und Schuppen schließen.</li>
                     <li>Fenster ein letztes Mal kontrollieren.</li>
                     <li>Schlüssel wie vereinbart hinterlegen oder mitnehmen.</li>
                 </ul>
-            </div>
-            <div id="abreise-betriebskosten" class="final-checklist">
-                <h3>11) Betriebskosten</h3>
-                <p>Bitte die Betriebskosten wie vereinbart notieren und an Manuel weitergeben.</p>
-                <div class="tip">Am besten direkt bei der Abreise festhalten.</div>
             </div>
             <div id="abreise-vorraete" class="final-checklist">
                 <h3>12) Vorräte und Hinweise</h3>
@@ -1474,7 +1473,7 @@
                 this.stepComplete = {};
                 this.defaultSections = ['anreise', 'ankunft', 'abreise', 'allgemein'];
                 this.ankunftSections = ['strom', 'wasser', 'wasser-aufdrehen', 'boiler', 'ofen', 'eheizung'];
-                this.abreiseSections = ['abreise-strom-boiler', 'abreise-endreinigung', 'abreise-wasser-abdrehen', 'abreise-boiler-entleeren', 'abreise-ofen', 'abreise-eheizung', 'abreise-kaffeemaschine', 'abreise-frostschutz', 'abreise-fensterlaeden', 'abreise-abschliessen', 'abreise-betriebskosten', 'abreise-vorraete'];
+                this.abreiseSections = ['abreise-strom-boiler', 'abreise-endreinigung', 'abreise-wasser-abdrehen', 'abreise-boiler-entleeren', 'abreise-ofen', 'abreise-eheizung', 'abreise-kaffeemaschine', 'abreise-frostschutz', 'abreise-wasser-zuleitung-entleeren', 'abreise-fensterlaeden', 'abreise-abschliessen', 'abreise-vorraete'];
                 this.init();
             }
 
@@ -1483,7 +1482,7 @@
                 this.mainContent = document.querySelector('.main-content');
                 this.stepContainers = document.querySelectorAll('.step-container');
                 this.sections = document.querySelectorAll(
-                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #wasser-aufdrehen, #boiler, #ofen, #eheizung, #abreise, #abreise-strom-boiler, #abreise-wasser-abdrehen, #abreise-boiler-entleeren, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-abschliessen, #abreise-betriebskosten, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #diashow, #belegungskalender, #notfall, #muellkalender'
+                    '#anreise, #anreise-adresse, #anreise-fussweg, #anreise-heizung, #ankunft, #strom, #wasser, #wasser-aufdrehen, #boiler, #ofen, #eheizung, #abreise, #abreise-strom-boiler, #abreise-wasser-abdrehen, #abreise-boiler-entleeren, #abreise-ofen, #abreise-endreinigung, #abreise-fensterlaeden, #abreise-eheizung, #abreise-kaffeemaschine, #abreise-frostschutz, #abreise-wasser-zuleitung-entleeren, #abreise-abschliessen, #abreise-vorraete, #allgemein, #menubaum, #wlan, #internet, #musik, #beleuchtung, #skibindung, #skischuhtrockner, #einrichtung, #hofladen, #diashow, #belegungskalender, #notfall, #muellkalender'
                 );
                 this.chapterButtons = document.querySelectorAll('.chapter-btn');
                 this.prevBtn = document.getElementById('prevBtn');
