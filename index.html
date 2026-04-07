@@ -1713,6 +1713,14 @@
 
             nextStep() {
                 if (this.currentStep === 1) {
+                    if (this.areAllSectionsComplete(this.ankunftSections)) {
+                        this.currentStep = 2;
+                        this.currentSection = this.findFirstIncompleteSection(this.abreiseSections) || this.abreiseSections[0];
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+
                     const currentIndex = this.ankunftSections.indexOf(this.currentSection);
                     if (currentIndex >= 0 && currentIndex < this.ankunftSections.length - 1) {
                         this.currentSection = this.ankunftSections[currentIndex + 1];
@@ -1729,14 +1737,6 @@
                         return;
                     }
 
-                    if (this.areAllSectionsComplete(this.ankunftSections)) {
-                        this.currentStep = 2;
-                        this.currentSection = this.abreiseSections[0];
-                        this.updateView();
-                        this.scrollToTop();
-                        return;
-                    }
-
                     this.currentSection = this.ankunftSections[0];
                     this.updateView();
                     this.scrollToTop();
@@ -1744,6 +1744,14 @@
                 }
 
                 if (this.currentStep === 2) {
+                    if (this.areAllSectionsComplete(this.abreiseSections)) {
+                        this.currentStep = 3;
+                        this.currentSection = this.defaultSections[this.currentStep] || 'allgemein';
+                        this.updateView();
+                        this.scrollToTop();
+                        return;
+                    }
+
                     const currentIndex = this.abreiseSections.indexOf(this.currentSection);
                     if (currentIndex >= 0 && currentIndex < this.abreiseSections.length - 1) {
                         this.currentSection = this.abreiseSections[currentIndex + 1];
@@ -1755,14 +1763,6 @@
                     const firstIncompleteAbreiseSection = this.findFirstIncompleteSection(this.abreiseSections);
                     if (firstIncompleteAbreiseSection) {
                         this.currentSection = firstIncompleteAbreiseSection;
-                        this.updateView();
-                        this.scrollToTop();
-                        return;
-                    }
-
-                    if (this.areAllSectionsComplete(this.abreiseSections)) {
-                        this.currentStep = 3;
-                        this.currentSection = this.defaultSections[this.currentStep] || 'allgemein';
                         this.updateView();
                         this.scrollToTop();
                         return;
@@ -1831,12 +1831,15 @@
 
                 if (this.currentStep === 1) {
                     const isFirstAnkunftSection = this.currentSection === this.ankunftSections[0];
+                    const allAnkunftComplete = this.areAllSectionsComplete(this.ankunftSections);
                     const isLastAnkunftSection = this.currentSection === this.ankunftSections[this.ankunftSections.length - 1];
-                    const hasOpenAnkunftSteps = !!this.findFirstIncompleteSection(this.ankunftSections);
+                    const hasOpenAnkunftSteps = !allAnkunftComplete;
                     this.prevBtn.style.display = '';
                     this.prevBtn.disabled = false;
                     this.prevBtn.textContent = isFirstAnkunftSection ? '← Zurück' : '← Vorheriger Schritt';
-                    this.nextBtn.textContent = isLastAnkunftSection
+                    this.nextBtn.textContent = allAnkunftComplete
+                        ? 'Nächstes Kapitel →'
+                        : isLastAnkunftSection
                         ? (hasOpenAnkunftSteps ? 'Offene Schritte prüfen →' : 'Nächstes Kapitel →')
                         : 'Nächster Schritt →';
                     return;
@@ -1844,12 +1847,15 @@
 
                 if (this.currentStep === 2) {
                     const isFirstAbreiseSection = this.currentSection === this.abreiseSections[0];
+                    const allAbreiseComplete = this.areAllSectionsComplete(this.abreiseSections);
                     const isLastAbreiseSection = this.currentSection === this.abreiseSections[this.abreiseSections.length - 1];
-                    const hasOpenAbreiseSteps = !!this.findFirstIncompleteSection(this.abreiseSections);
+                    const hasOpenAbreiseSteps = !allAbreiseComplete;
                     this.prevBtn.style.display = '';
                     this.prevBtn.disabled = false;
                     this.prevBtn.textContent = isFirstAbreiseSection ? '← Zurück' : '← Vorheriger Schritt';
-                    this.nextBtn.textContent = isLastAbreiseSection
+                    this.nextBtn.textContent = allAbreiseComplete
+                        ? 'Nächstes Kapitel →'
+                        : isLastAbreiseSection
                         ? (hasOpenAbreiseSteps ? 'Offene Schritte prüfen →' : 'Nächstes Kapitel →')
                         : 'Nächster Schritt →';
                     return;
