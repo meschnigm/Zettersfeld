@@ -1567,6 +1567,20 @@
                 return sections.find(sectionId => !this.stepComplete[sectionId]);
             }
 
+            findNextIncompleteSection(sections, currentSection) {
+                const currentIndex = sections.indexOf(currentSection);
+                if (currentIndex < 0) return this.findFirstIncompleteSection(sections);
+
+                for (let index = currentIndex + 1; index < sections.length; index++) {
+                    const sectionId = sections[index];
+                    if (!this.stepComplete[sectionId]) {
+                        return sectionId;
+                    }
+                }
+
+                return null;
+            }
+
             areAllSectionsComplete(sections) {
                 return sections.length > 0 && sections.every(sectionId => this.stepComplete[sectionId]);
             }
@@ -1721,9 +1735,9 @@
                         return;
                     }
 
-                    const currentIndex = this.ankunftSections.indexOf(this.currentSection);
-                    if (currentIndex >= 0 && currentIndex < this.ankunftSections.length - 1) {
-                        this.currentSection = this.ankunftSections[currentIndex + 1];
+                    const nextIncompleteAnkunftSection = this.findNextIncompleteSection(this.ankunftSections, this.currentSection);
+                    if (nextIncompleteAnkunftSection) {
+                        this.currentSection = nextIncompleteAnkunftSection;
                         this.updateView();
                         this.scrollToTop();
                         return;
@@ -1752,9 +1766,9 @@
                         return;
                     }
 
-                    const currentIndex = this.abreiseSections.indexOf(this.currentSection);
-                    if (currentIndex >= 0 && currentIndex < this.abreiseSections.length - 1) {
-                        this.currentSection = this.abreiseSections[currentIndex + 1];
+                    const nextIncompleteAbreiseSection = this.findNextIncompleteSection(this.abreiseSections, this.currentSection);
+                    if (nextIncompleteAbreiseSection) {
+                        this.currentSection = nextIncompleteAbreiseSection;
                         this.updateView();
                         this.scrollToTop();
                         return;
