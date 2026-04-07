@@ -95,6 +95,28 @@
             color: #22543d;
             font-weight: 600;
         }
+        .sequence-info-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .sequence-reset-btn {
+            padding: 10px 16px;
+            border: 1px solid #9ae6b4;
+            border-radius: 999px;
+            background: #ffffff;
+            color: #276749;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .sequence-reset-btn:hover {
+            background: #f0fff4;
+            transform: translateY(-1px);
+        }
         .btn { padding: 12px 24px; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 16px; }
         .btn-primary { background: #4299e1; color: white; }
         .btn-primary:hover:not(:disabled) { background: #3182ce; transform: translateY(-1px); }
@@ -452,6 +474,12 @@
             .upload-actions {
                 flex-direction: column;
                 align-items: stretch;
+            }
+            .sequence-info-content {
+                align-items: stretch;
+            }
+            .sequence-reset-btn {
+                width: 100%;
             }
         }
     </style>
@@ -1507,8 +1535,7 @@
                     this.stepCompleteCheckbox.addEventListener('change', () => {
                         if (this.currentStep !== 1 && this.currentStep !== 2) return;
                         this.stepComplete[this.currentSection] = this.stepCompleteCheckbox.checked;
-                        this.saveProgress();
-                        this.updateSequenceInfo();
+                        this.updateView();
                     });
                 }
 
@@ -1555,6 +1582,12 @@
                 return [];
             }
 
+            getSequenceSectionsForStep(step) {
+                if (step === 1) return this.ankunftSections;
+                if (step === 2) return this.abreiseSections;
+                return [];
+            }
+
             resetSequenceProgress() {
                 [...this.ankunftSections, ...this.abreiseSections].forEach(sectionId => {
                     if (typeof this.stepComplete[sectionId] !== 'boolean') {
@@ -1597,17 +1630,48 @@
                 return '';
             }
 
+            resetCompletedSequence(step) {
+                const sections = this.getSequenceSectionsForStep(step);
+                if (!sections.length) return;
+
+                sections.forEach(sectionId => {
+                    this.stepComplete[sectionId] = false;
+                });
+
+                if (this.currentStep === step) {
+                    this.currentSection = sections[0];
+                }
+
+                this.updateView();
+                this.scrollToTop();
+            }
+
             updateSequenceInfo() {
                 if (!this.sequenceInfo) return;
 
                 const sections = this.getCurrentSequenceSections();
                 if (!this.areAllSectionsComplete(sections)) {
                     this.sequenceInfo.style.display = 'none';
-                    this.sequenceInfo.textContent = '';
+                    this.sequenceInfo.replaceChildren();
                     return;
                 }
 
-                this.sequenceInfo.textContent = this.getSequenceInfoMessage();
+                const message = document.createElement('span');
+                message.textContent = this.getSequenceInfoMessage();
+
+                const resetButton = document.createElement('button');
+                resetButton.type = 'button';
+                resetButton.className = 'sequence-reset-btn';
+                resetButton.textContent = 'Erledigte Schritte zurücksetzen';
+                resetButton.addEventListener('click', () => {
+                    this.resetCompletedSequence(this.currentStep);
+                });
+
+                const content = document.createElement('div');
+                content.className = 'sequence-info-content';
+                content.append(message, resetButton);
+
+                this.sequenceInfo.replaceChildren(content);
                 this.sequenceInfo.style.display = 'block';
             }
 
