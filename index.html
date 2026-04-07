@@ -1531,9 +1531,9 @@
             goToStep(step) {
                 this.currentStep = step;
                 if (step === 1) {
-                    this.currentSection = this.ankunftSections[0];
+                    this.currentSection = this.findFirstIncompleteSection(this.ankunftSections) || this.ankunftSections[0];
                 } else if (step === 2) {
-                    this.currentSection = this.abreiseSections[0];
+                    this.currentSection = this.findFirstIncompleteSection(this.abreiseSections) || this.abreiseSections[0];
                 } else {
                     this.currentSection = this.defaultSections[step] || 'anreise';
                 }
@@ -1557,7 +1557,9 @@
 
             resetSequenceProgress() {
                 [...this.ankunftSections, ...this.abreiseSections].forEach(sectionId => {
-                    this.stepComplete[sectionId] = false;
+                    if (typeof this.stepComplete[sectionId] !== 'boolean') {
+                        this.stepComplete[sectionId] = false;
+                    }
                 });
             }
 
@@ -1872,6 +1874,7 @@
                     const data = JSON.parse(saved);
                     this.currentStep = data.currentStep || 0;
                     this.currentSection = data.currentSection || 'anreise';
+                    this.stepComplete = data.stepComplete || {};
                 }
             }
         }
